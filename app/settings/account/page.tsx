@@ -10,12 +10,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
-import {
   Select,
   SelectContent,
   SelectItem,
@@ -359,27 +353,6 @@ export default function NotificationsSettingsPage() {
                 )}
               </div>
 
-              {/* Notification Priority Info */}
-              <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 border border-border">
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Info className="h-4 w-4 text-muted-foreground cursor-help flex-shrink-0" />
-                    </TooltipTrigger>
-                    <TooltipContent side="top" className="max-w-xs">
-                      <p>When a project matches multiple notification types, you will only receive one notification based on the highest priority.</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-                <div className="text-xs text-muted-foreground">
-                  <span className="font-medium">Notification priority:</span>{" "}
-                  <span className="text-primary font-medium">Saved Search Alerts</span>
-                  {" → "}
-                  <span>Invitation to Bid</span>
-                  {" → "}
-                  <span>Keyword Alerts</span>
-                </div>
-              </div>
             </section>
 
             {/* Company Settings Section */}
