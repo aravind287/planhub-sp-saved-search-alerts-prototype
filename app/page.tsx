@@ -86,6 +86,8 @@ export default function ProjectsPage() {
     enabledAlertsCount,
     canEnableMoreAlerts,
     hasActiveAlert,
+    showReviewBanner,
+    setShowReviewBanner,
   } = useSettings()
 
   // Local UI state
@@ -215,6 +217,35 @@ export default function ProjectsPage() {
 
       {/* Main Content - Full Width */}
       <main className="px-4 sm:px-6 py-6 w-full">
+
+        {/* Review Settings Banner — shown once user has an active alert with global alerts enabled */}
+        {hasActiveAlert && globalAlertsEnabled && showReviewBanner && (
+          <div className="mb-4 flex items-center justify-between gap-4 px-4 py-2.5 bg-primary/10 border border-primary/20 rounded-lg">
+            <div className="flex items-center gap-3">
+              <Bell className="h-4 w-4 text-primary flex-shrink-0" />
+              <p className="text-sm text-foreground">
+                You have Saved Search Alerts enabled. Consider reviewing your <strong>ITB Notifications</strong> and <strong>Saved Keyword Alerts</strong> to reduce duplicates.
+              </p>
+            </div>
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <Button
+                onClick={() => router.push('/settings/account')}
+                size="sm"
+                variant="default"
+                className="h-7 text-xs"
+              >
+                Review Settings
+              </Button>
+              <button
+                onClick={() => setShowReviewBanner(false)}
+                className="p-1 text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="Dismiss"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Global Alerts Disabled Warning */}
         {!globalAlertsEnabled && hasActiveAlert && (
