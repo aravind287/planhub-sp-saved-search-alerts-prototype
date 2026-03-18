@@ -1,12 +1,50 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useMemo } from "react"
 import { useRouter } from "next/navigation"
 import { Search, ChevronUp, Bell, BellOff, Info } from "lucide-react"
+
+const NEW_DAYS = 7
+
+interface Project {
+  id: string
+  name: string
+  date: string
+  location: string
+  distance: string
+  docs: string
+  datePosted: string
+  stage: string
+  value: string
+}
+
+const ALL_PROJECTS: Project[] = [
+  { id: "p1",  name: "Top Pot Doughnuts Foundry Cafe TI",          date: "05/08/2026", location: "Kent, Washington",        distance: "12 miles",  docs: "Matches Found", datePosted: "2026-03-15", stage: "Bidding",  value: "$240K"  },
+  { id: "p2",  name: "Microsoft Campus Building 44 Expansion",      date: "05/12/2026", location: "Redmond, Washington",     distance: "18 miles",  docs: "Available",     datePosted: "2026-03-14", stage: "Pre-Bid",  value: "$4.2M"  },
+  { id: "p3",  name: "Seattle Children's Hospital Wing C",           date: "05/15/2026", location: "Seattle, Washington",     distance: "8 miles",   docs: "Available",     datePosted: "2026-03-16", stage: "Bidding",  value: "$12M"   },
+  { id: "p4",  name: "Tacoma Public Library Renovation",             date: "05/20/2026", location: "Tacoma, Washington",      distance: "28 miles",  docs: "Matches Found", datePosted: "2026-03-17", stage: "Bidding",  value: "$1.8M"  },
+  { id: "p5",  name: "Auburn School District HVAC Upgrade",          date: "05/25/2026", location: "Auburn, Washington",      distance: "22 miles",  docs: "Available",     datePosted: "2026-03-10", stage: "Pre-Bid",  value: "$890K"  },
+  { id: "p6",  name: "Bellevue Tech Campus Phase 2",                 date: "06/01/2026", location: "Bellevue, Washington",    distance: "14 miles",  docs: "Matches Found", datePosted: "2026-03-08", stage: "Bidding",  value: "$28M"   },
+  { id: "p7",  name: "Renton Community Center Addition",             date: "06/05/2026", location: "Renton, Washington",      distance: "16 miles",  docs: "Available",     datePosted: "2026-03-05", stage: "Bidding",  value: "$3.4M"  },
+  { id: "p8",  name: "Federal Way Fire Station No. 63",              date: "06/10/2026", location: "Federal Way, Washington", distance: "24 miles",  docs: "Available",     datePosted: "2026-02-28", stage: "Pre-Bid",  value: "$5.1M"  },
+  { id: "p9",  name: "Kirkland Waterfront Mixed-Use Development",    date: "06/15/2026", location: "Kirkland, Washington",    distance: "20 miles",  docs: "Matches Found", datePosted: "2026-02-20", stage: "Bidding",  value: "$67M"   },
+  { id: "p10", name: "Everett Naval Station Barracks Renovation",    date: "06/18/2026", location: "Everett, Washington",     distance: "32 miles",  docs: "Available",     datePosted: "2026-02-15", stage: "Awarded",  value: "$18M"   },
+  { id: "p11", name: "Bothell Medical Office Building",              date: "06/22/2026", location: "Bothell, Washington",     distance: "26 miles",  docs: "Matches Found", datePosted: "2026-03-12", stage: "Pre-Bid",  value: "$7.6M"  },
+  { id: "p12", name: "Shoreline Light Rail Station Parking Garage",  date: "06/28/2026", location: "Shoreline, Washington",   distance: "10 miles",  docs: "Available",     datePosted: "2026-03-01", stage: "Bidding",  value: "$14M"   },
+  { id: "p13", name: "Redmond Elementary School Rebuild",            date: "07/01/2026", location: "Redmond, Washington",     distance: "19 miles",  docs: "Available",     datePosted: "2026-03-16", stage: "Pre-Bid",  value: "$22M"   },
+  { id: "p14", name: "Issaquah Senior Living Facility",              date: "07/08/2026", location: "Issaquah, Washington",    distance: "25 miles",  docs: "Matches Found", datePosted: "2026-03-13", stage: "Bidding",  value: "$31M"   },
+  { id: "p15", name: "Kent Warehouse Distribution Center",           date: "07/15/2026", location: "Kent, Washington",        distance: "15 miles",  docs: "Available",     datePosted: "2026-02-10", stage: "Bidding",  value: "$9.8M"  },
+]
+
+function isProjectNew(datePosted: string): boolean {
+  const posted = new Date(datePosted)
+  const diffMs = new Date().getTime() - posted.getTime()
+  return diffMs / (1000 * 60 * 60 * 24) <= NEW_DAYS
+}
 import { PlanHubHeader } from "@/components/planhub-header"
 import { SearchFiltersPanel, type FilterState } from "@/components/search-filters"
 import { KeywordChips } from "@/components/keyword-chips"
-import { ManageSearchesModal } from "@/components/manage-searches-modal"
+import { ManageSearchesModal, type SavedSearch } from "@/components/manage-searches-modal"
 import { SaveSearchDialog } from "@/components/save-search-dialog"
 import { SaveOptionsModal } from "@/components/save-options-modal"
 import { OnboardingBanner } from "@/components/onboarding-banner"
@@ -58,6 +96,23 @@ export default function ProjectsPage() {
   const [showManageModal, setShowManageModal] = useState(false)
   const [showSaveOptionsModal, setShowSaveOptionsModal] = useState(false)
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
+
+  // What's New state
+  const [viewedProjectIds, setViewedProjectIds] = useState<Set<string>>(new Set())
+  const [showNewOnly, setShowNewOnly] = useState(false)
+
+  const newProjectIds = useMemo(
+    () => new Set(ALL_PROJECTS.filter(p => isProjectNew(p.datePosted)).map(p => p.id)),
+    []
+  )
+  const unreadCount = ALL_PROJECTS.filter(p => newProjectIds.has(p.id) && !viewedProjectIds.has(p.id)).length
+  const displayedProjects = showNewOnly
+    ? ALL_PROJECTS.filter(p => newProjectIds.has(p.id) && !viewedProjectIds.has(p.id))
+    : ALL_PROJECTS
+
+  const markViewed = (id: string) => setViewedProjectIds(prev => new Set(prev).add(id))
+
+  const totalSavedSearchNew = savedSearches.reduce((sum, s) => sum + (s.newCount ?? 0), 0)
 
   // Get active search if one is selected
   const activeSearch = activeSearchId 
@@ -311,11 +366,16 @@ export default function ProjectsPage() {
                       + Save Searches
                     </button>
                     <span className="text-muted-foreground">|</span>
-                    <button 
+                    <button
                       onClick={() => setShowManageModal(true)}
-                      className="text-primary hover:underline px-2"
+                      className="text-primary hover:underline px-2 flex items-center gap-1.5"
                     >
                       View Saved Searches
+                      {totalSavedSearchNew > 0 && (
+                        <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-blue-100 text-blue-700 leading-none">
+                          {totalSavedSearchNew} new
+                        </span>
+                      )}
                     </button>
                     <span className="text-muted-foreground">|</span>
                     <button 
@@ -400,15 +460,34 @@ export default function ProjectsPage() {
         {/* Results Preview */}
         <div className="mt-6 border rounded-lg bg-card">
           <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-border">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <span className="font-semibold text-foreground">PlanHub Projects</span>
-              <span className="text-sm text-muted-foreground">| 875 total</span>
+              <span className="text-sm text-muted-foreground">| {ALL_PROJECTS.length} total</span>
+              <button
+                onClick={() => setShowNewOnly(!showNewOnly)}
+                className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border transition-colors ${
+                  showNewOnly
+                    ? "bg-blue-100 text-blue-700 border-blue-300"
+                    : unreadCount > 0
+                    ? "bg-muted text-muted-foreground border-border hover:bg-muted/80"
+                    : "bg-muted text-muted-foreground border-border opacity-50 cursor-default"
+                }`}
+                disabled={unreadCount === 0 && !showNewOnly}
+              >
+                <span className={`w-1.5 h-1.5 rounded-full ${unreadCount > 0 ? "bg-blue-500" : "bg-muted-foreground"}`} />
+                {unreadCount} new
+              </button>
+              {showNewOnly && (
+                <span className="text-xs text-muted-foreground">
+                  Showing {displayedProjects.length} unread
+                </span>
+              )}
             </div>
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
               <span>Go to page</span>
-              <input 
-                type="text" 
-                defaultValue="1" 
+              <input
+                type="text"
+                defaultValue="1"
                 className="w-10 h-7 text-center border rounded text-foreground"
               />
               <span>Page 1 of 88</span>
@@ -420,38 +499,74 @@ export default function ProjectsPage() {
           </div>
 
           <div className="overflow-x-auto">
-          <table className="w-full min-w-[600px]">
-            <thead className="border-b border-border bg-muted/30">
-              <tr className="text-sm text-muted-foreground">
-                <th className="text-left px-4 py-3 font-medium">Project</th>
-                <th className="text-left px-4 py-3 font-medium">Bid Date</th>
-                <th className="text-left px-4 py-3 font-medium">Location</th>
-                <th className="text-left px-4 py-3 font-medium">Distance</th>
-                <th className="text-left px-4 py-3 font-medium">Documents</th>
-                <th className="text-left px-4 py-3 font-medium">Action</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border">
-              {[
-                { name: "Top Pot Doughnuts Foundry Cafe TI", date: "05/08/2026", location: "Kent, Washington", distance: "1231 miles", docs: "Matches Found" },
-                { name: "Microsoft Campus Building 44 Expansion", date: "05/12/2026", location: "Redmond, Washington", distance: "1225 miles", docs: "Available" },
-                { name: "Seattle Children's Hospital Wing", date: "05/15/2026", location: "Seattle, Washington", distance: "1220 miles", docs: "Available" },
-              ].map((project, i) => (
-                <tr key={i} className="hover:bg-muted/30 transition-colors">
-                  <td className="px-4 py-3 text-sm font-medium text-foreground">{project.name}</td>
-                  <td className="px-4 py-3 text-sm text-muted-foreground">{project.date}</td>
-                  <td className="px-4 py-3 text-sm text-muted-foreground">{project.location}</td>
-                  <td className="px-4 py-3 text-sm text-muted-foreground">{project.distance}</td>
-                  <td className="px-4 py-3 text-sm text-primary">{project.docs}</td>
-                  <td className="px-4 py-3">
-                    <Button size="sm" variant="outline" className="text-xs">
-                      View
-                    </Button>
-                  </td>
+            <table className="w-full min-w-[700px]">
+              <thead className="border-b border-border bg-muted/30">
+                <tr className="text-sm text-muted-foreground">
+                  <th className="text-left px-4 py-3 font-medium">Project</th>
+                  <th className="text-left px-4 py-3 font-medium">Bid Date</th>
+                  <th className="text-left px-4 py-3 font-medium">Location</th>
+                  <th className="text-left px-4 py-3 font-medium">Distance</th>
+                  <th className="text-left px-4 py-3 font-medium">Est. Value</th>
+                  <th className="text-left px-4 py-3 font-medium">Documents</th>
+                  <th className="text-left px-4 py-3 font-medium">Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {displayedProjects.length === 0 ? (
+                  <tr>
+                    <td colSpan={7} className="px-4 py-12 text-center text-sm text-muted-foreground">
+                      No new unread projects. Turn off the filter to see all projects.
+                    </td>
+                  </tr>
+                ) : (
+                  displayedProjects.map((project) => {
+                    const isNew = newProjectIds.has(project.id)
+                    const isUnread = isNew && !viewedProjectIds.has(project.id)
+                    return (
+                      <tr
+                        key={project.id}
+                        className={`hover:bg-muted/30 transition-colors ${isUnread ? "bg-blue-50/40" : ""}`}
+                      >
+                        <td className="px-4 py-3 text-sm">
+                          <div className="flex items-center gap-2">
+                            {isUnread && (
+                              <span className="w-2 h-2 rounded-full bg-blue-500 flex-shrink-0" title="New — not yet viewed" />
+                            )}
+                            <span className={`font-medium ${isUnread ? "text-foreground" : "text-muted-foreground"}`}>
+                              {project.name}
+                            </span>
+                            <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${
+                              project.stage === "Awarded"
+                                ? "bg-green-100 text-green-700"
+                                : project.stage === "Pre-Bid"
+                                ? "bg-amber-100 text-amber-700"
+                                : "bg-primary/10 text-primary"
+                            }`}>
+                              {project.stage}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-muted-foreground">{project.date}</td>
+                        <td className="px-4 py-3 text-sm text-muted-foreground">{project.location}</td>
+                        <td className="px-4 py-3 text-sm text-muted-foreground">{project.distance}</td>
+                        <td className="px-4 py-3 text-sm text-muted-foreground">{project.value}</td>
+                        <td className="px-4 py-3 text-sm text-primary">{project.docs}</td>
+                        <td className="px-4 py-3">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="text-xs"
+                            onClick={() => markViewed(project.id)}
+                          >
+                            View
+                          </Button>
+                        </td>
+                      </tr>
+                    )
+                  })
+                )}
+              </tbody>
+            </table>
           </div>
         </div>
       </main>

@@ -107,6 +107,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       keywords,
       matchCount: Math.floor(Math.random() * 200) + 10,
       lastUpdated: new Date().toISOString(),
+      newCount: Math.floor(Math.random() * 8) + 3,
     }
     setSavedSearches(prev => [...prev, newSearch])
     return newSearch
