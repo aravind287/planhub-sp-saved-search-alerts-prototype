@@ -112,7 +112,6 @@ export default function ProjectsPage() {
 
   const markViewed = (id: string) => setViewedProjectIds(prev => new Set(prev).add(id))
 
-  const totalSavedSearchNew = savedSearches.reduce((sum, s) => sum + (s.newCount ?? 0), 0)
 
   // Get active search if one is selected
   const activeSearch = activeSearchId 
@@ -368,14 +367,9 @@ export default function ProjectsPage() {
                     <span className="text-muted-foreground">|</span>
                     <button
                       onClick={() => setShowManageModal(true)}
-                      className="text-primary hover:underline px-2 flex items-center gap-1.5"
+                      className="text-primary hover:underline px-2"
                     >
                       View Saved Searches
-                      {totalSavedSearchNew > 0 && (
-                        <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-blue-100 text-blue-700 leading-none">
-                          {totalSavedSearchNew} new
-                        </span>
-                      )}
                     </button>
                     <span className="text-muted-foreground">|</span>
                     <button 

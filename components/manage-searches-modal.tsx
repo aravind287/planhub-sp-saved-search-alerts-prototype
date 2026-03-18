@@ -149,11 +149,6 @@ export function ManageSearchesModal({
                       {activeSearchId === search.id && (
                         <Badge variant="secondary" className="text-xs">Active</Badge>
                       )}
-                      {(search.newCount ?? 0) > 0 && (
-                        <Badge className="text-xs bg-blue-100 text-blue-700 border-blue-200 hover:bg-blue-100">
-                          {search.newCount} new
-                        </Badge>
-                      )}
                     </div>
                     <div className="text-sm text-muted-foreground mt-0.5">
                       {search.matchCount} projects - Updated {formatDate(search.lastUpdated)}
