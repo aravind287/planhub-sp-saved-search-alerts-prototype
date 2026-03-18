@@ -54,7 +54,6 @@ import { KeywordChips } from "@/components/keyword-chips"
 import { ManageSearchesModal, type SavedSearch } from "@/components/manage-searches-modal"
 import { SaveSearchDialog } from "@/components/save-search-dialog"
 import { SaveOptionsModal } from "@/components/save-options-modal"
-import { OnboardingBanner } from "@/components/onboarding-banner"
 import { Button } from "@/components/ui/button"
 import {
   Collapsible,
@@ -87,10 +86,6 @@ export default function ProjectsPage() {
     enabledAlertsCount,
     canEnableMoreAlerts,
     hasActiveAlert,
-    showOnboarding,
-    setShowOnboarding,
-    showReviewBanner,
-    setShowReviewBanner,
   } = useSettings()
 
   // Local UI state
@@ -208,19 +203,6 @@ export default function ProjectsPage() {
     updateFrequency(id, frequency)
   }
 
-  const handleDismissOnboarding = () => {
-    setShowOnboarding(false)
-    // In a real app, you would save this preference to the user's profile
-    // localStorage.setItem('planhub_onboarding_complete', 'true')
-  }
-
-  // Check completion states for onboarding
-  const hasFiltersSet = Object.values(filters).some((v) => 
-    Array.isArray(v) ? v.length > 0 : v !== ""
-  )
-  const hasKeywordsSet = keywords.length > 0
-  const hasSavedSearch = savedSearches.length > 0
-
   // Check if global saved search alerts are enabled
   const globalAlertsEnabled = notificationSettings.savedSearchAlertsEnabled
 
@@ -230,26 +212,6 @@ export default function ProjectsPage() {
 
       {/* Main Content - Full Width */}
       <main className="px-4 sm:px-6 py-6 w-full">
-        {/* Onboarding Banner - Shows setup guide OR review settings banner (only when global alerts enabled) */}
-        {(showOnboarding || (hasActiveAlert && globalAlertsEnabled && showReviewBanner)) && (
-          <div className="mb-6">
-            <OnboardingBanner
-              onDismiss={() => {
-                if (hasActiveAlert) {
-                  setShowReviewBanner(false)
-                }
-                setShowOnboarding(false)
-              }}
-              onStartSetup={() => setIsAdvancedOpen(true)}
-              onOpenSaveDialog={() => setShowSaveDialog(true)}
-              hasFiltersSet={hasFiltersSet}
-              hasKeywordsSet={hasKeywordsSet}
-              hasSavedSearch={hasSavedSearch}
-              hasActiveAlert={hasActiveAlert}
-              globalAlertsEnabled={globalAlertsEnabled}
-            />
-          </div>
-        )}
 
         {/* Global Alerts Disabled Warning */}
         {!globalAlertsEnabled && hasActiveAlert && (
@@ -356,21 +318,36 @@ export default function ProjectsPage() {
                       {enabledAlertsCount}/{maxAlerts} alerts
                     </span>
                     <span className="text-muted-foreground">|</span>
-                    <button 
-                      onClick={() => {
-                        if (activeSearch && hasUnsavedChanges) {
-                          // Show options modal when editing with unsaved changes
-                          setShowSaveOptionsModal(true)
-                        } else {
-                          // Go directly to save dialog for new searches
-                          setShowSaveDialog(true)
-                        }
-                      }}
-                      disabled={activeFilterCount === 0}
-                      className={`text-primary hover:underline px-2 ${activeFilterCount === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
-                    >
-                      + Save Searches
-                    </button>
+                    <div className="flex items-center gap-1">
+                      <button
+                        onClick={() => {
+                          if (activeSearch && hasUnsavedChanges) {
+                            setShowSaveOptionsModal(true)
+                          } else {
+                            setShowSaveDialog(true)
+                          }
+                        }}
+                        disabled={activeFilterCount === 0}
+                        className={`text-primary hover:underline px-2 ${activeFilterCount === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      >
+                        + Save Searches
+                      </button>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-green-100 text-green-700 cursor-default select-none">
+                              NEW
+                            </span>
+                          </TooltipTrigger>
+                          <TooltipContent side="bottom" align="start" className="max-w-[240px] p-3">
+                            <p className="font-semibold text-sm mb-1">New Saved Search Alerts</p>
+                            <p className="text-xs text-muted-foreground leading-relaxed">
+                              Set up your search filters and enable alerts to get notified when new projects match your criteria.
+                            </p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    </div>
                     <span className="text-muted-foreground">|</span>
                     <button
                       onClick={() => setShowManageModal(true)}
