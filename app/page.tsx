@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useMemo } from "react"
 import { useRouter } from "next/navigation"
-import { Search, ChevronUp, Bell, BellOff, Info } from "lucide-react"
+import { Search, ChevronUp, Bell, BellOff, Info, X } from "lucide-react"
 
 const NEW_DAYS = 7
 
@@ -98,6 +98,9 @@ export default function ProjectsPage() {
   const [showManageModal, setShowManageModal] = useState(false)
   const [showSaveOptionsModal, setShowSaveOptionsModal] = useState(false)
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
+
+  // New callout state — open by default
+  const [showNewCallout, setShowNewCallout] = useState(true)
 
   // What's New state
   const [viewedProjectIds, setViewedProjectIds] = useState<Set<string>>(new Set())
@@ -318,7 +321,7 @@ export default function ProjectsPage() {
                       {enabledAlertsCount}/{maxAlerts} alerts
                     </span>
                     <span className="text-muted-foreground">|</span>
-                    <div className="flex items-center gap-1">
+                    <div className="relative flex items-center gap-1">
                       <button
                         onClick={() => {
                           if (activeSearch && hasUnsavedChanges) {
@@ -332,21 +335,25 @@ export default function ProjectsPage() {
                       >
                         + Save Searches
                       </button>
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-green-100 text-green-700 cursor-default select-none">
-                              NEW
-                            </span>
-                          </TooltipTrigger>
-                          <TooltipContent side="bottom" align="start" className="max-w-[240px] p-3">
-                            <p className="font-semibold text-sm mb-1">New Saved Search Alerts</p>
-                            <p className="text-xs text-muted-foreground leading-relaxed">
-                              Set up your search filters and enable alerts to get notified when new projects match your criteria.
-                            </p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
+                      <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-green-100 text-green-700 select-none">
+                        NEW
+                      </span>
+                      {showNewCallout && (
+                        <div className="absolute top-full right-0 mt-2 w-64 bg-white border border-border rounded-lg shadow-lg p-3 z-50">
+                          <div className="flex items-start justify-between gap-2 mb-1.5">
+                            <p className="font-semibold text-sm text-gray-900">New Saved Search Alerts</p>
+                            <button
+                              onClick={() => setShowNewCallout(false)}
+                              className="text-gray-500 hover:text-gray-700 flex-shrink-0 mt-0.5"
+                            >
+                              <X className="h-3.5 w-3.5" />
+                            </button>
+                          </div>
+                          <p className="text-xs text-gray-700 leading-relaxed">
+                            Set up your search filters and enable alerts to get notified when new projects match your criteria.
+                          </p>
+                        </div>
+                      )}
                     </div>
                     <span className="text-muted-foreground">|</span>
                     <button
