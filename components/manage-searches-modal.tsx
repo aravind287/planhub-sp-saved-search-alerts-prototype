@@ -30,7 +30,6 @@ export interface SavedSearch {
   keywords: string[]
   matchCount: number
   lastUpdated: string
-  newCount?: number
 }
 
 interface ManageSearchesModalProps {
