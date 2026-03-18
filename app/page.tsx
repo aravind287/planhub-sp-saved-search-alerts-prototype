@@ -41,6 +41,13 @@ function isProjectNew(datePosted: string): boolean {
   const diffMs = new Date().getTime() - posted.getTime()
   return diffMs / (1000 * 60 * 60 * 24) <= NEW_DAYS
 }
+
+function parseBidDate(dateStr: string): number {
+  const [month, day, year] = dateStr.split("/")
+  return new Date(parseInt(year), parseInt(month) - 1, parseInt(day)).getTime()
+}
+
+const SORTED_PROJECTS = [...ALL_PROJECTS].sort((a, b) => parseBidDate(b.date) - parseBidDate(a.date))
 import { PlanHubHeader } from "@/components/planhub-header"
 import { SearchFiltersPanel, type FilterState } from "@/components/search-filters"
 import { KeywordChips } from "@/components/keyword-chips"
@@ -102,13 +109,13 @@ export default function ProjectsPage() {
   const [showNewOnly, setShowNewOnly] = useState(false)
 
   const newProjectIds = useMemo(
-    () => new Set(ALL_PROJECTS.filter(p => isProjectNew(p.datePosted)).map(p => p.id)),
+    () => new Set(SORTED_PROJECTS.filter(p => isProjectNew(p.datePosted)).map(p => p.id)),
     []
   )
-  const unreadCount = ALL_PROJECTS.filter(p => newProjectIds.has(p.id) && !viewedProjectIds.has(p.id)).length
+  const unreadCount = SORTED_PROJECTS.filter(p => newProjectIds.has(p.id) && !viewedProjectIds.has(p.id)).length
   const displayedProjects = showNewOnly
-    ? ALL_PROJECTS.filter(p => newProjectIds.has(p.id) && !viewedProjectIds.has(p.id))
-    : ALL_PROJECTS
+    ? SORTED_PROJECTS.filter(p => newProjectIds.has(p.id) && !viewedProjectIds.has(p.id))
+    : SORTED_PROJECTS
 
   const markViewed = (id: string) => setViewedProjectIds(prev => new Set(prev).add(id))
 
@@ -456,7 +463,7 @@ export default function ProjectsPage() {
           <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-border">
             <div className="flex items-center gap-3">
               <span className="font-semibold text-foreground">PlanHub Projects</span>
-              <span className="text-sm text-muted-foreground">| {ALL_PROJECTS.length} total</span>
+              <span className="text-sm text-muted-foreground">| {SORTED_PROJECTS.length} total</span>
               <button
                 onClick={() => setShowNewOnly(!showNewOnly)}
                 className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border transition-colors ${
