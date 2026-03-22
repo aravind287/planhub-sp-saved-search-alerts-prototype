@@ -79,10 +79,10 @@ export function SaveSearchDialog({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-foreground">
             <Bell className="h-5 w-5 text-primary" />
-            Save Search Alert
+            Save Search
           </DialogTitle>
           <DialogDescription className="text-muted-foreground">
-            Save your current filters and get notified when new matching projects are posted.
+            Never miss a project. Enable email alerts to get notified when new matching projects are posted.
           </DialogDescription>
         </DialogHeader>
 

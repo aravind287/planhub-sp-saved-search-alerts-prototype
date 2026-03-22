@@ -84,7 +84,7 @@ export function ManageSearchesModal({
       <DialogContent className="sm:max-w-[600px] p-0">
         <DialogHeader className="px-6 pt-6 pb-4">
           <div className="flex items-center justify-between">
-            <DialogTitle className="text-xl font-semibold">Manage Searches</DialogTitle>
+            <DialogTitle className="text-xl font-semibold">My Searches &amp; Alerts</DialogTitle>
             <Badge 
               variant="secondary" 
               className={isAtAlertLimit 
@@ -96,7 +96,7 @@ export function ManageSearchesModal({
             </Badge>
           </div>
           <DialogDescription>
-            View, edit, or delete your saved search alerts.
+            Manage your saved searches and email alert preferences.
             {isAtAlertLimit && (
               <span className="block mt-1 text-amber-600">
                 You have reached the maximum number of alerts. Disable one to enable alerts on another search.
