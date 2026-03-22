@@ -38,7 +38,7 @@ export const emptyFilters: FilterState = {
   projectBuildingUse: [],
   projectTypes: [],
   sectorLaborStatus: [],
-  regions: [],
+  regions: ["ca"],
   counties: [],
   zipCode: "",
   distance: "",
