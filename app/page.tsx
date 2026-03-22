@@ -2,52 +2,12 @@
 
 import { useState, useCallback, useMemo } from "react"
 import { useRouter } from "next/navigation"
-import { Search, ChevronUp, Bell, BellOff, Info, X } from "lucide-react"
-
-const NEW_DAYS = 7
-
-interface Project {
-  id: string
-  name: string
-  date: string
-  location: string
-  distance: string
-  docs: string
-  datePosted: string
-  stage: string
-  value: string
-}
-
-const ALL_PROJECTS: Project[] = [
-  { id: "p1",  name: "Top Pot Doughnuts Foundry Cafe TI",          date: "05/08/2026", location: "Kent, Washington",        distance: "12 miles",  docs: "Matches Found", datePosted: "2026-03-15", stage: "Bidding",  value: "$240K"  },
-  { id: "p2",  name: "Microsoft Campus Building 44 Expansion",      date: "05/12/2026", location: "Redmond, Washington",     distance: "18 miles",  docs: "Available",     datePosted: "2026-03-14", stage: "Pre-Bid",  value: "$4.2M"  },
-  { id: "p3",  name: "Seattle Children's Hospital Wing C",           date: "05/15/2026", location: "Seattle, Washington",     distance: "8 miles",   docs: "Available",     datePosted: "2026-03-16", stage: "Bidding",  value: "$12M"   },
-  { id: "p4",  name: "Tacoma Public Library Renovation",             date: "05/20/2026", location: "Tacoma, Washington",      distance: "28 miles",  docs: "Matches Found", datePosted: "2026-03-17", stage: "Bidding",  value: "$1.8M"  },
-  { id: "p5",  name: "Auburn School District HVAC Upgrade",          date: "05/25/2026", location: "Auburn, Washington",      distance: "22 miles",  docs: "Available",     datePosted: "2026-03-10", stage: "Pre-Bid",  value: "$890K"  },
-  { id: "p6",  name: "Bellevue Tech Campus Phase 2",                 date: "06/01/2026", location: "Bellevue, Washington",    distance: "14 miles",  docs: "Matches Found", datePosted: "2026-03-08", stage: "Bidding",  value: "$28M"   },
-  { id: "p7",  name: "Renton Community Center Addition",             date: "06/05/2026", location: "Renton, Washington",      distance: "16 miles",  docs: "Available",     datePosted: "2026-03-05", stage: "Bidding",  value: "$3.4M"  },
-  { id: "p8",  name: "Federal Way Fire Station No. 63",              date: "06/10/2026", location: "Federal Way, Washington", distance: "24 miles",  docs: "Available",     datePosted: "2026-02-28", stage: "Pre-Bid",  value: "$5.1M"  },
-  { id: "p9",  name: "Kirkland Waterfront Mixed-Use Development",    date: "06/15/2026", location: "Kirkland, Washington",    distance: "20 miles",  docs: "Matches Found", datePosted: "2026-02-20", stage: "Bidding",  value: "$67M"   },
-  { id: "p10", name: "Everett Naval Station Barracks Renovation",    date: "06/18/2026", location: "Everett, Washington",     distance: "32 miles",  docs: "Available",     datePosted: "2026-02-15", stage: "Awarded",  value: "$18M"   },
-  { id: "p11", name: "Bothell Medical Office Building",              date: "06/22/2026", location: "Bothell, Washington",     distance: "26 miles",  docs: "Matches Found", datePosted: "2026-03-12", stage: "Pre-Bid",  value: "$7.6M"  },
-  { id: "p12", name: "Shoreline Light Rail Station Parking Garage",  date: "06/28/2026", location: "Shoreline, Washington",   distance: "10 miles",  docs: "Available",     datePosted: "2026-03-01", stage: "Bidding",  value: "$14M"   },
-  { id: "p13", name: "Redmond Elementary School Rebuild",            date: "07/01/2026", location: "Redmond, Washington",     distance: "19 miles",  docs: "Available",     datePosted: "2026-03-16", stage: "Pre-Bid",  value: "$22M"   },
-  { id: "p14", name: "Issaquah Senior Living Facility",              date: "07/08/2026", location: "Issaquah, Washington",    distance: "25 miles",  docs: "Matches Found", datePosted: "2026-03-13", stage: "Bidding",  value: "$31M"   },
-  { id: "p15", name: "Kent Warehouse Distribution Center",           date: "07/15/2026", location: "Kent, Washington",        distance: "15 miles",  docs: "Available",     datePosted: "2026-02-10", stage: "Bidding",  value: "$9.8M"  },
-]
-
-function isProjectNew(datePosted: string): boolean {
-  const posted = new Date(datePosted)
-  const diffMs = new Date().getTime() - posted.getTime()
-  return diffMs / (1000 * 60 * 60 * 24) <= NEW_DAYS
-}
-
-function parseBidDate(dateStr: string): number {
-  const [month, day, year] = dateStr.split("/")
-  return new Date(parseInt(year), parseInt(month) - 1, parseInt(day)).getTime()
-}
-
-const SORTED_PROJECTS = [...ALL_PROJECTS].sort((a, b) => parseBidDate(b.date) - parseBidDate(a.date))
+import { Search, ChevronUp, Bell, BellOff, Info, X, ChevronsUpDown, ChevronDown } from "lucide-react"
+import { ALL_PROJECTS } from "@/lib/mock-projects"
+import { getCompanyDistanceLabel, getCompanyDistance, distanceFromZip } from "@/lib/geo-utils"
+import { PROJECT_DOCUMENTS } from "@/lib/mock-documents"
+import { ProjectSidePanel } from "@/components/project-side-panel"
+import { MatchingDocumentsModal } from "@/components/matching-documents-modal"
 import { PlanHubHeader } from "@/components/planhub-header"
 import { SearchFiltersPanel, type FilterState } from "@/components/search-filters"
 import { KeywordChips } from "@/components/keyword-chips"
@@ -69,6 +29,56 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { useSettings, emptyFilters } from "@/lib/settings-context"
+
+const NEW_DAYS = 7
+
+function isProjectNew(datePosted: string): boolean {
+  const posted = new Date(datePosted)
+  const diffMs = new Date().getTime() - posted.getTime()
+  return diffMs / (1000 * 60 * 60 * 24) <= NEW_DAYS
+}
+
+function parseBidDate(dateStr: string): number {
+  const [month, day, year] = dateStr.split("/")
+  return new Date(parseInt(year), parseInt(month) - 1, parseInt(day)).getTime()
+}
+
+function addDays(date: Date, days: number): Date {
+  const d = new Date(date)
+  d.setDate(d.getDate() + days)
+  return d
+}
+
+const SORTED_PROJECTS = [...ALL_PROJECTS]
+
+type SortField = "bid-date" | "project-name" | "distance"
+type SortDir = "asc" | "desc"
+
+function SortableHeader({ label, field, sortField, sortDir, onSort }: {
+  label: string
+  field: SortField
+  sortField: SortField
+  sortDir: SortDir
+  onSort: (f: SortField) => void
+}) {
+  const isActive = field === sortField
+  return (
+    <th
+      className="text-left px-4 py-3 font-medium cursor-pointer select-none hover:text-foreground"
+      onClick={() => onSort(field)}
+    >
+      <span className="inline-flex items-center gap-1">
+        {label}
+        {isActive
+          ? sortDir === "asc"
+            ? <ChevronUp className="h-3.5 w-3.5 text-primary" />
+            : <ChevronDown className="h-3.5 w-3.5 text-primary" />
+          : <ChevronsUpDown className="h-3.5 w-3.5 opacity-40" />
+        }
+      </span>
+    </th>
+  )
+}
 
 export default function ProjectsPage() {
   const router = useRouter()
@@ -94,12 +104,24 @@ export default function ProjectsPage() {
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(true)
   const [keywords, setKeywords] = useState<string[]>([])
   const [filters, setFilters] = useState<FilterState>(emptyFilters)
+  // Applied state — only updated on Search click
+  const [appliedKeywords, setAppliedKeywords] = useState<string[]>([])
+  const [appliedFilters, setAppliedFilters] = useState<FilterState>(emptyFilters)
   const [activeSearchId, setActiveSearchId] = useState<string | null>(null)
   const [searchMode, setSearchMode] = useState<"keyword" | "document">("keyword")
   const [showSaveDialog, setShowSaveDialog] = useState(false)
   const [showManageModal, setShowManageModal] = useState(false)
   const [showSaveOptionsModal, setShowSaveOptionsModal] = useState(false)
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
+  // Side panel & documents modal
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null)
+  const [docsModalProjectId, setDocsModalProjectId] = useState<string | null>(null)
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1)
+  const PAGE_SIZE = 10
+  // Sorting — default bid date descending
+  const [sortField, setSortField] = useState<SortField>("bid-date")
+  const [sortDir, setSortDir] = useState<SortDir>("desc")
 
   // New callout state — open by default
   const [showNewCallout, setShowNewCallout] = useState(true)
@@ -112,10 +134,147 @@ export default function ProjectsPage() {
     () => new Set(SORTED_PROJECTS.filter(p => isProjectNew(p.datePosted)).map(p => p.id)),
     []
   )
-  const unreadCount = SORTED_PROJECTS.filter(p => newProjectIds.has(p.id) && !viewedProjectIds.has(p.id)).length
-  const displayedProjects = showNewOnly
-    ? SORTED_PROJECTS.filter(p => newProjectIds.has(p.id) && !viewedProjectIds.has(p.id))
-    : SORTED_PROJECTS
+
+  const filteredProjects = useMemo(() => {
+    let result = SORTED_PROJECTS
+
+    // Keyword search — match against project name or project keywords
+    if (appliedKeywords.length > 0) {
+      result = result.filter(p =>
+        appliedKeywords.some(kw => {
+          const q = kw.toLowerCase()
+          return p.name.toLowerCase().includes(q) ||
+            p.keywords.some(pk => pk.toLowerCase().includes(q))
+        })
+      )
+    }
+
+    // Trades
+    if (appliedFilters.tradesSubtrades.length > 0) {
+      result = result.filter(p =>
+        p.trades.some(t => appliedFilters.tradesSubtrades.includes(t))
+      )
+    }
+
+    // Construction type
+    if (appliedFilters.constructionType.length > 0) {
+      result = result.filter(p => appliedFilters.constructionType.includes(p.constructionType))
+    }
+
+    // Building use
+    if (appliedFilters.projectBuildingUse.length > 0) {
+      result = result.filter(p => appliedFilters.projectBuildingUse.includes(p.buildingUse))
+    }
+
+    // Project types
+    if (appliedFilters.projectTypes.length > 0) {
+      result = result.filter(p => appliedFilters.projectTypes.includes(p.projectType))
+    }
+
+    // Regions (states)
+    if (appliedFilters.regions.length > 0) {
+      result = result.filter(p => appliedFilters.regions.includes(p.state))
+    }
+
+    // Counties
+    if (appliedFilters.counties.length > 0) {
+      result = result.filter(p =>
+        appliedFilters.counties.includes(`${p.state}:${p.county}`)
+      )
+    }
+
+    // Status
+    if (appliedFilters.status.length > 0) {
+      const now = new Date()
+      result = result.filter(p => {
+        const bidDate = new Date(parseBidDate(p.date))
+        const isClosingSoon = p.stage === "Bidding" && bidDate <= addDays(now, 7)
+        const isRecentlyPosted = isProjectNew(p.datePosted)
+        return appliedFilters.status.some(s => {
+          if (s === "awarded") return p.stage === "Awarded"
+          if (s === "closing-soon") return isClosingSoon
+          if (s === "recently-posted") return isRecentlyPosted
+          if (s === "open") return p.stage === "Bidding" || p.stage === "Pre-Bid"
+          return false
+        })
+      })
+    }
+
+    // Labor status
+    if (appliedFilters.sectorLaborStatus.length > 0) {
+      result = result.filter(p => appliedFilters.sectorLaborStatus.includes(p.laborStatus))
+    }
+
+    // Bid due date — preset
+    if (appliedFilters.bidDueDate && appliedFilters.bidDueDate !== "custom") {
+      const now = new Date()
+      result = result.filter(p => {
+        const bid = new Date(parseBidDate(p.date))
+        switch (appliedFilters.bidDueDate) {
+          case "next-7-days":  return bid >= now && bid <= addDays(now, 7)
+          case "next-14-days": return bid >= now && bid <= addDays(now, 14)
+          case "next-30-days": return bid >= now && bid <= addDays(now, 30)
+          case "next-60-days": return bid >= now && bid <= addDays(now, 60)
+          case "past-due":     return bid < now && bid >= addDays(now, -60)
+          default: return true
+        }
+      })
+    } else if (appliedFilters.bidDueDate === "custom" && appliedFilters.bidDateFrom) {
+      const from = new Date(appliedFilters.bidDateFrom)
+      const to = appliedFilters.bidDateTo ? new Date(appliedFilters.bidDateTo) : new Date("2099-12-31")
+      result = result.filter(p => {
+        const bid = new Date(parseBidDate(p.date))
+        return bid >= from && bid <= to
+      })
+    }
+
+    // Zip code + distance radius
+    if (appliedFilters.zipCode.trim() && appliedFilters.distance) {
+      const maxMiles = parseInt(appliedFilters.distance)
+      result = result.filter(p => {
+        const d = distanceFromZip(appliedFilters.zipCode, p.location)
+        return d !== null && d <= maxMiles
+      })
+    }
+
+    return result
+  }, [appliedKeywords, appliedFilters])
+
+  const sortedProjects = useMemo(() => {
+    return [...filteredProjects].sort((a, b) => {
+      let cmp = 0
+      if (sortField === "bid-date") {
+        cmp = parseBidDate(a.date) - parseBidDate(b.date)
+      } else if (sortField === "project-name") {
+        cmp = a.name.localeCompare(b.name)
+      } else if (sortField === "distance") {
+        const da = getCompanyDistance(a.location) ?? 99999
+        const db = getCompanyDistance(b.location) ?? 99999
+        cmp = da - db
+      }
+      return sortDir === "asc" ? cmp : -cmp
+    })
+  }, [filteredProjects, sortField, sortDir])
+
+  const handleSort = (field: SortField) => {
+    if (sortField === field) {
+      setSortDir(d => d === "asc" ? "desc" : "asc")
+    } else {
+      setSortField(field)
+      setSortDir("asc")
+    }
+    setCurrentPage(1)
+  }
+
+  const baseProjects = showNewOnly
+    ? sortedProjects.filter(p => newProjectIds.has(p.id) && !viewedProjectIds.has(p.id))
+    : sortedProjects
+  const unreadCount = filteredProjects.filter(p => newProjectIds.has(p.id) && !viewedProjectIds.has(p.id)).length
+  const pageCount = Math.max(1, Math.ceil(baseProjects.length / PAGE_SIZE))
+  const safePage = Math.min(currentPage, pageCount)
+  const displayedProjects = baseProjects.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE)
+
+  const goToPage = (page: number) => setCurrentPage(Math.max(1, Math.min(page, pageCount)))
 
   const markViewed = (id: string) => setViewedProjectIds(prev => new Set(prev).add(id))
 
@@ -153,13 +312,23 @@ export default function ProjectsPage() {
     checkForChanges(filters, newKeywords)
   }
 
-  // Load a saved search into the filters
+  // Load a saved search into the filters and apply immediately
   const handleLoadSearch = (search: SavedSearch) => {
     setActiveSearchId(search.id)
     setFilters(search.filters)
     setKeywords(search.keywords)
+    setAppliedFilters(search.filters)
+    setAppliedKeywords(search.keywords)
     setHasUnsavedChanges(false)
     setShowManageModal(false)
+    setSelectedProjectId(null)
+  }
+
+  const handleSearch = () => {
+    setAppliedKeywords(keywords)
+    setAppliedFilters(filters)
+    setSelectedProjectId(null)
+    setCurrentPage(1)
   }
 
   // Clear filters and deselect any active search
@@ -167,6 +336,10 @@ export default function ProjectsPage() {
     setActiveSearchId(null)
     setFilters(emptyFilters)
     setKeywords([])
+    setAppliedFilters(emptyFilters)
+    setAppliedKeywords([])
+    setSelectedProjectId(null)
+    setCurrentPage(1)
     setHasUnsavedChanges(false)
   }
 
@@ -335,7 +508,8 @@ export default function ProjectsPage() {
                               <Info className="h-4 w-4 text-muted-foreground cursor-help" />
                             </TooltipTrigger>
                             <TooltipContent side="bottom" className="max-w-xs">
-                              <p>You will receive an email when new projects are posted matching your search filters and keywords.</p>
+                              <p className="font-semibold text-sm mb-1">Never miss a project</p>
+                              <p>Set up your filters and keywords and enable email alerts to get notified when matching projects are posted.</p>
                             </TooltipContent>
                           </Tooltip>
                         </TooltipProvider>
@@ -349,7 +523,7 @@ export default function ProjectsPage() {
                   <div className="flex items-center gap-1 text-sm flex-wrap justify-end">
                     {/* Alerts counter */}
                     <span className={`px-2 ${!canEnableMoreAlerts ? 'text-amber-600 font-medium' : 'text-muted-foreground'}`}>
-                      {enabledAlertsCount}/{maxAlerts} alerts
+                      {enabledAlertsCount}/{maxAlerts} email alerts
                     </span>
                     <span className="text-muted-foreground">|</span>
                     <div className="relative flex items-center gap-1">
@@ -362,17 +536,19 @@ export default function ProjectsPage() {
                           }
                         }}
                         disabled={activeFilterCount === 0}
-                        className={`text-primary hover:underline px-2 ${activeFilterCount === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border transition-colors ${
+                          activeFilterCount === 0
+                            ? 'opacity-50 cursor-not-allowed bg-muted text-muted-foreground border-border'
+                            : 'bg-primary/10 text-primary border-primary/30 hover:bg-primary/20'
+                        }`}
                       >
-                        + Save Searches
+                        <Bell className="h-3 w-3" />
+                        Save &amp; Alert
                       </button>
-                      <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-green-100 text-green-700 select-none">
-                        NEW
-                      </span>
                       {showNewCallout && (
                         <div className="absolute top-full right-0 mt-2 w-64 bg-white border border-border rounded-lg shadow-lg p-3 z-50">
                           <div className="flex items-start justify-between gap-2 mb-1.5">
-                            <p className="font-semibold text-sm text-gray-900">New Saved Search Alerts</p>
+                            <p className="font-semibold text-sm text-gray-900">Never miss a project</p>
                             <button
                               onClick={() => setShowNewCallout(false)}
                               className="text-gray-500 hover:text-gray-700 flex-shrink-0 mt-0.5"
@@ -381,7 +557,7 @@ export default function ProjectsPage() {
                             </button>
                           </div>
                           <p className="text-xs text-gray-700 leading-relaxed">
-                            Set up your search filters and enable alerts to get notified when new projects match your criteria.
+                            Set up your filters and keywords and enable email alerts to get notified when matching projects are posted.
                           </p>
                         </div>
                       )}
@@ -391,7 +567,7 @@ export default function ProjectsPage() {
                       onClick={() => setShowManageModal(true)}
                       className="text-primary hover:underline px-2"
                     >
-                      View Saved Searches
+                      My Searches &amp; Alerts
                     </button>
                     <span className="text-muted-foreground">|</span>
                     <button 
@@ -463,7 +639,7 @@ export default function ProjectsPage() {
 
                 {/* Bottom Action Row */}
                 <div className="flex items-center justify-end pt-4 border-t border-border">
-                  <Button className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground">
+                  <Button onClick={handleSearch} className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground">
                     <Search className="h-4 w-4" />
                     Search
                   </Button>
@@ -473,12 +649,13 @@ export default function ProjectsPage() {
           </div>
         </Collapsible>
 
-        {/* Results Preview */}
-        <div className="mt-6 border rounded-lg bg-card">
+        {/* Results */}
+        <div className="mt-6 border rounded-lg bg-card overflow-hidden">
+          {/* Header */}
           <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-border">
             <div className="flex items-center gap-3">
               <span className="font-semibold text-foreground">PlanHub Projects</span>
-              <span className="text-sm text-muted-foreground">| {SORTED_PROJECTS.length} total</span>
+              <span className="text-sm text-muted-foreground">| {filteredProjects.length} total</span>
               <button
                 onClick={() => setShowNewOnly(!showNewOnly)}
                 className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border transition-colors ${
@@ -494,97 +671,143 @@ export default function ProjectsPage() {
                 {unreadCount} new
               </button>
               {showNewOnly && (
-                <span className="text-xs text-muted-foreground">
-                  Showing {displayedProjects.length} unread
-                </span>
+                <span className="text-xs text-muted-foreground">Showing {displayedProjects.length} unread</span>
               )}
             </div>
-            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+            <div className="flex items-center gap-3 text-sm text-muted-foreground">
               <span>Go to page</span>
               <input
                 type="text"
-                defaultValue="1"
+                value={safePage}
+                onChange={(e) => {
+                  const n = parseInt(e.target.value)
+                  if (!isNaN(n)) goToPage(n)
+                }}
                 className="w-10 h-7 text-center border rounded text-foreground"
               />
-              <span>Page 1 of 88</span>
+              <span>Page {safePage} of {pageCount}</span>
               <span className="flex gap-1">
-                <button className="px-2 hover:text-foreground">{"<"}</button>
-                <button className="px-2 hover:text-foreground">{">"}</button>
+                <button
+                  onClick={() => goToPage(safePage - 1)}
+                  disabled={safePage === 1}
+                  className="px-2 hover:text-foreground disabled:opacity-40"
+                >{"<"}</button>
+                <button
+                  onClick={() => goToPage(safePage + 1)}
+                  disabled={safePage === pageCount}
+                  className="px-2 hover:text-foreground disabled:opacity-40"
+                >{">"}</button>
               </span>
             </div>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[700px]">
-              <thead className="border-b border-border bg-muted/30">
-                <tr className="text-sm text-muted-foreground">
-                  <th className="text-left px-4 py-3 font-medium">Project</th>
-                  <th className="text-left px-4 py-3 font-medium">Bid Date</th>
-                  <th className="text-left px-4 py-3 font-medium">Location</th>
-                  <th className="text-left px-4 py-3 font-medium">Distance</th>
-                  <th className="text-left px-4 py-3 font-medium">Est. Value</th>
-                  <th className="text-left px-4 py-3 font-medium">Documents</th>
-                  <th className="text-left px-4 py-3 font-medium">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                {displayedProjects.length === 0 ? (
-                  <tr>
-                    <td colSpan={7} className="px-4 py-12 text-center text-sm text-muted-foreground">
-                      No new unread projects. Turn off the filter to see all projects.
-                    </td>
+          {/* Table + Side Panel */}
+          <div className="flex">
+            <div className="flex-1 min-w-0 overflow-x-auto">
+              <table className="w-full min-w-[500px]">
+                <thead className="border-b border-border bg-muted/30">
+                  <tr className="text-sm text-muted-foreground">
+                    <SortableHeader label="Project" field="project-name" sortField={sortField} sortDir={sortDir} onSort={handleSort} />
+                    <SortableHeader label="Bid Date" field="bid-date" sortField={sortField} sortDir={sortDir} onSort={handleSort} />
+                    <th className="text-left px-4 py-3 font-medium">Location</th>
+                    <SortableHeader label="Distance" field="distance" sortField={sortField} sortDir={sortDir} onSort={handleSort} />
+                    <th className="text-left px-4 py-3 font-medium">Est. Value</th>
+                    {appliedKeywords.length > 0 && (
+                      <th className="text-left px-4 py-3 font-medium">Documents</th>
+                    )}
                   </tr>
-                ) : (
-                  displayedProjects.map((project) => {
-                    const isNew = newProjectIds.has(project.id)
-                    const isUnread = isNew && !viewedProjectIds.has(project.id)
-                    return (
-                      <tr
-                        key={project.id}
-                        className={`hover:bg-muted/30 transition-colors ${isUnread ? "bg-blue-50/40" : ""}`}
-                      >
-                        <td className="px-4 py-3 text-sm">
-                          <div className="flex items-center gap-2">
-                            {isUnread && (
-                              <span className="w-2 h-2 rounded-full bg-blue-500 flex-shrink-0" title="New — not yet viewed" />
-                            )}
-                            <span className={`font-medium ${isUnread ? "text-foreground" : "text-muted-foreground"}`}>
-                              {project.name}
-                            </span>
-                            <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${
-                              project.stage === "Awarded"
-                                ? "bg-green-100 text-green-700"
-                                : project.stage === "Pre-Bid"
-                                ? "bg-amber-100 text-amber-700"
-                                : "bg-primary/10 text-primary"
-                            }`}>
-                              {project.stage}
-                            </span>
-                          </div>
-                        </td>
-                        <td className="px-4 py-3 text-sm text-muted-foreground">{project.date}</td>
-                        <td className="px-4 py-3 text-sm text-muted-foreground">{project.location}</td>
-                        <td className="px-4 py-3 text-sm text-muted-foreground">{project.distance}</td>
-                        <td className="px-4 py-3 text-sm text-muted-foreground">{project.value}</td>
-                        <td className="px-4 py-3 text-sm text-primary">{project.docs}</td>
-                        <td className="px-4 py-3">
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="text-xs"
-                            onClick={() => markViewed(project.id)}
-                          >
-                            View
-                          </Button>
-                        </td>
-                      </tr>
-                    )
-                  })
-                )}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {displayedProjects.length === 0 ? (
+                    <tr>
+                      <td colSpan={appliedKeywords.length > 0 ? 6 : 5} className="px-4 py-12 text-center text-sm text-muted-foreground">
+                        {showNewOnly ? "No new unread projects. Turn off the filter to see all." : "No projects match your current filters."}
+                      </td>
+                    </tr>
+                  ) : (
+                    displayedProjects.map((project) => {
+                      const isNew = newProjectIds.has(project.id)
+                      const isUnread = isNew && !viewedProjectIds.has(project.id)
+                      const isSelected = selectedProjectId === project.id
+                      const hasDocs = !!PROJECT_DOCUMENTS[project.id]
+                      return (
+                        <tr
+                          key={project.id}
+                          onClick={() => { setSelectedProjectId(isSelected ? null : project.id); markViewed(project.id) }}
+                          className={`cursor-pointer transition-colors ${
+                            isSelected
+                              ? "bg-primary/8 border-l-2 border-l-primary"
+                              : isUnread
+                              ? "bg-blue-50/40 hover:bg-blue-50/70"
+                              : "hover:bg-muted/30"
+                          }`}
+                        >
+                          <td className="px-4 py-3 text-sm">
+                            <div className="flex items-center gap-2">
+                              {isUnread && !isSelected && (
+                                <span className="w-2 h-2 rounded-full bg-blue-500 flex-shrink-0" title="New — not yet viewed" />
+                              )}
+                              <span className={`font-medium ${isUnread && !isSelected ? "text-foreground" : "text-muted-foreground"}`}>
+                                {project.name}
+                              </span>
+                            </div>
+                          </td>
+                          <td className="px-4 py-3 text-sm text-muted-foreground whitespace-nowrap">{project.date}</td>
+                          <td className="px-4 py-3 text-sm text-muted-foreground">{project.location}</td>
+                          <td className="px-4 py-3 text-sm text-muted-foreground whitespace-nowrap">{getCompanyDistanceLabel(project.location)}</td>
+                          <td className="px-4 py-3 text-sm text-muted-foreground whitespace-nowrap">{project.value}</td>
+                          {appliedKeywords.length > 0 && (
+                            <td className="px-4 py-3 text-sm">
+                              {hasDocs ? (
+                                <button
+                                  onClick={(e) => { e.stopPropagation(); setDocsModalProjectId(project.id) }}
+                                  className="text-primary hover:underline font-medium"
+                                >
+                                  Matches Found
+                                </button>
+                              ) : (
+                                <span className="text-muted-foreground">Available</span>
+                              )}
+                            </td>
+                          )}
+                        </tr>
+                      )
+                    })
+                  )}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Side Panel */}
+            {selectedProjectId && (() => {
+              const proj = filteredProjects.find(p => p.id === selectedProjectId)
+              if (!proj) return null
+              return (
+                <div className="w-[360px] shrink-0 border-l bg-card overflow-y-auto" style={{ maxHeight: "600px" }}>
+                  <ProjectSidePanel
+                    project={proj}
+                    onClose={() => setSelectedProjectId(null)}
+                  />
+                </div>
+              )
+            })()}
           </div>
         </div>
+
+        {/* Matching Documents Modal */}
+        {docsModalProjectId && (() => {
+          const proj = filteredProjects.find(p => p.id === docsModalProjectId)
+          const docs = PROJECT_DOCUMENTS[docsModalProjectId] ?? []
+          if (!proj) return null
+          return (
+            <MatchingDocumentsModal
+              projectName={proj.name}
+              documents={docs}
+              activeKeywords={appliedKeywords}
+              onClose={() => setDocsModalProjectId(null)}
+            />
+          )
+        })()}
       </main>
 
       {/* Manage Searches Modal */}

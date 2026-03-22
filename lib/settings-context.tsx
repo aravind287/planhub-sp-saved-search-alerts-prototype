@@ -43,6 +43,8 @@ export const emptyFilters: FilterState = {
   zipCode: "",
   distance: "",
   bidDueDate: "",
+  bidDateFrom: "",
+  bidDateTo: "",
 }
 
 const MAX_ALERTS = 5
