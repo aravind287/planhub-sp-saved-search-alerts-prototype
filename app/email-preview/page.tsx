@@ -136,9 +136,9 @@ function EmailPreview({ search, projects }: { search: SavedSearch; projects: Pro
       {/* Email body */}
       <div className="bg-gray-50 border-x border-b border-gray-200 rounded-b-xl overflow-hidden shadow-sm">
         {/* Brand header */}
-        <div className="bg-blue-700 px-8 py-5 flex items-center justify-between">
+        <div className="bg-green-700 px-8 py-5 flex items-center justify-between">
           <span className="text-white font-bold text-2xl tracking-tight">PlanHub</span>
-          <span className="text-blue-200 text-xs uppercase tracking-wide font-medium">
+          <span className="text-green-200 text-xs uppercase tracking-wide font-medium">
             {search.alertFrequency === "instant" ? "Instant" : search.alertFrequency === "daily" ? "Daily" : "Weekly"} Alert
           </span>
         </div>
@@ -159,7 +159,7 @@ function EmailPreview({ search, projects }: { search: SavedSearch; projects: Pro
               {projects.slice(0, 5).map(p => (
                 <div
                   key={p.id}
-                  className="flex items-center gap-3 p-3.5 rounded-lg border border-gray-100 bg-gray-50 hover:bg-blue-50 hover:border-blue-200 transition-colors"
+                  className="flex items-center gap-3 p-3.5 rounded-lg border border-gray-100 bg-gray-50 hover:bg-green-50 hover:border-green-200 transition-colors"
                 >
                   <div className="flex-1 min-w-0">
                     <div className="font-semibold text-gray-900 text-sm">{p.name}</div>
@@ -190,7 +190,7 @@ function EmailPreview({ search, projects }: { search: SavedSearch; projects: Pro
           <div className="flex justify-center pt-1">
             <Link
               href={ctaUrl}
-              className="inline-flex items-center gap-2 bg-blue-700 hover:bg-blue-800 text-white font-semibold text-sm px-6 py-3 rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white font-semibold text-sm px-6 py-3 rounded-lg transition-colors"
             >
               View all matching projects
               <ExternalLink className="h-4 w-4" />
@@ -243,7 +243,7 @@ export default function EmailPreviewPage() {
           <p className="text-sm text-gray-400 mb-5">
             Save a search with email alerts enabled to preview what subscribers receive.
           </p>
-          <Link href="/" className="text-sm text-blue-700 font-medium hover:underline">
+          <Link href="/" className="text-sm text-green-700 font-medium hover:underline">
             ← Set up a search
           </Link>
         </div>
