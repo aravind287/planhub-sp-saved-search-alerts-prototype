@@ -24,7 +24,7 @@ export const ALL_PROJECTS: Project[] = [
   {
     id: "p1", name: "Los Angeles Unified School District Campus Renovation",
     date: "03/22/2026", location: "Los Angeles, California", zip: "90012",
-    docs: "Matches Found", datePosted: "2026-03-18", stage: "Bidding", value: "$1.2M",
+    docs: "Matches Found", datePosted: "2026-03-02", stage: "Bidding", value: "$1.2M",
     state: "ca", county: "Los Angeles", trades: ["electrical-low-voltage", "specialties"],
     buildingUse: "educational-school-university", constructionType: "commercial",
     projectType: "renovation-remodel-repair", laborStatus: "prevailing-wage",
@@ -33,7 +33,7 @@ export const ALL_PROJECTS: Project[] = [
   {
     id: "p2", name: "Kaiser Permanente San Jose Medical Center Renovation",
     date: "03/22/2026", location: "San Jose, California", zip: "95113",
-    docs: "Matches Found", datePosted: "2026-03-17", stage: "Bidding", value: "$870K",
+    docs: "Matches Found", datePosted: "2026-03-04", stage: "Bidding", value: "$870K",
     state: "ca", county: "Santa Clara", trades: ["electrical-low-voltage", "special-construction"],
     buildingUse: "clinic-hospital-medical", constructionType: "commercial",
     projectType: "renovation-remodel-repair", laborStatus: "non-union",
@@ -42,7 +42,7 @@ export const ALL_PROJECTS: Project[] = [
   {
     id: "p3", name: "Sacramento City Hall Modernization",
     date: "03/23/2026", location: "Sacramento, California", zip: "95814",
-    docs: "Matches Found", datePosted: "2026-03-16", stage: "Bidding", value: "$640K",
+    docs: "Matches Found", datePosted: "2026-03-06", stage: "Bidding", value: "$640K",
     state: "ca", county: "Sacramento", trades: ["electrical-low-voltage", "specialties"],
     buildingUse: "municipal", constructionType: "commercial",
     projectType: "renovation-remodel-repair", laborStatus: "prevailing-wage",
@@ -78,7 +78,7 @@ export const ALL_PROJECTS: Project[] = [
   {
     id: "p7", name: "LA Metro Red Line Station Renovation",
     date: "03/24/2026", location: "Los Angeles, California", zip: "90012",
-    docs: "Matches Found", datePosted: "2026-03-15", stage: "Bidding", value: "$3.4M",
+    docs: "Matches Found", datePosted: "2026-03-08", stage: "Bidding", value: "$3.4M",
     state: "ca", county: "Los Angeles", trades: ["electrical-low-voltage"],
     buildingUse: "transportation-terminal", constructionType: "civil",
     projectType: "renovation-remodel-repair", laborStatus: "prevailing-wage",
@@ -105,7 +105,7 @@ export const ALL_PROJECTS: Project[] = [
   {
     id: "p10", name: "San Francisco City Hall Building Upgrade",
     date: "03/25/2026", location: "San Francisco, California", zip: "94102",
-    docs: "Matches Found", datePosted: "2026-03-18", stage: "Bidding", value: "$1.1M",
+    docs: "Matches Found", datePosted: "2026-03-02", stage: "Bidding", value: "$1.1M",
     state: "ca", county: "San Francisco", trades: ["electrical-low-voltage", "specialties"],
     buildingUse: "municipal", constructionType: "commercial",
     projectType: "renovation-remodel-repair", laborStatus: "prevailing-wage",
@@ -150,7 +150,7 @@ export const ALL_PROJECTS: Project[] = [
   {
     id: "p15", name: "Caltrans District 4 Operations Center Renovation",
     date: "02/26/2026", location: "Oakland, California", zip: "94612",
-    docs: "Matches Found", datePosted: "2026-03-16", stage: "Bidding", value: "$5.2M",
+    docs: "Matches Found", datePosted: "2026-03-06", stage: "Bidding", value: "$5.2M",
     state: "ca", county: "Alameda", trades: ["electrical-low-voltage"],
     buildingUse: "road-highway", constructionType: "civil",
     projectType: "new-construction-no-site-work", laborStatus: "prevailing-wage",
@@ -177,7 +177,7 @@ export const ALL_PROJECTS: Project[] = [
   {
     id: "p18", name: "LA County Superior Court Building Renovation",
     date: "03/27/2026", location: "Los Angeles, California", zip: "90012",
-    docs: "Matches Found", datePosted: "2026-03-17", stage: "Bidding", value: "$3.0M",
+    docs: "Matches Found", datePosted: "2026-03-04", stage: "Bidding", value: "$3.0M",
     state: "ca", county: "Los Angeles", trades: ["electrical-low-voltage", "special-construction"],
     buildingUse: "municipal", constructionType: "commercial",
     projectType: "renovation-remodel-repair", laborStatus: "prevailing-wage",
@@ -307,7 +307,7 @@ export const ALL_PROJECTS: Project[] = [
   {
     id: "p32", name: "Seattle Children's Hospital Wing Renovation",
     date: "04/01/2026", location: "Seattle, Washington", zip: "98101",
-    docs: "Available", datePosted: "2026-03-16", stage: "Bidding", value: "$12M",
+    docs: "Available", datePosted: "2026-03-06", stage: "Bidding", value: "$12M",
     state: "wa", county: "King", trades: ["hvac", "plumbing", "electrical-low-voltage"],
     buildingUse: "clinic-hospital-medical", constructionType: "commercial",
     projectType: "renovation-remodel-repair", laborStatus: "union",
@@ -316,7 +316,7 @@ export const ALL_PROJECTS: Project[] = [
   {
     id: "p33", name: "Tacoma Public Library Renovation",
     date: "03/08/2026", location: "Tacoma, Washington", zip: "98401",
-    docs: "Matches Found", datePosted: "2026-03-17", stage: "Bidding", value: "$1.8M",
+    docs: "Matches Found", datePosted: "2026-03-04", stage: "Bidding", value: "$1.8M",
     state: "wa", county: "Pierce", trades: ["interior-walls-ceilings-insulation", "flooring", "electrical-low-voltage"],
     buildingUse: "library", constructionType: "commercial",
     projectType: "renovation-remodel-repair", laborStatus: "prevailing-wage",
@@ -397,7 +397,7 @@ export const ALL_PROJECTS: Project[] = [
   {
     id: "p42", name: "Redmond Elementary School Rebuild",
     date: "04/06/2026", location: "Redmond, Washington", zip: "98052",
-    docs: "Available", datePosted: "2026-03-16", stage: "Pre-Bid", value: "$22M",
+    docs: "Available", datePosted: "2026-03-06", stage: "Pre-Bid", value: "$22M",
     state: "wa", county: "King", trades: ["concrete-construction", "roofing-thermal-moisture", "hvac"],
     buildingUse: "educational-school-university", constructionType: "commercial",
     projectType: "new-construction-with-site-work", laborStatus: "prevailing-wage",
@@ -424,7 +424,7 @@ export const ALL_PROJECTS: Project[] = [
   {
     id: "p45", name: "Kent Cafe Tenant Improvement",
     date: "04/07/2026", location: "Kent, Washington", zip: "98032",
-    docs: "Matches Found", datePosted: "2026-03-15", stage: "Bidding", value: "$240K",
+    docs: "Matches Found", datePosted: "2026-03-08", stage: "Bidding", value: "$240K",
     state: "wa", county: "King", trades: ["interior-walls-ceilings-insulation", "flooring", "plumbing"],
     buildingUse: "restaurant", constructionType: "commercial",
     projectType: "tenant-build-out", laborStatus: "non-union",
@@ -435,7 +435,7 @@ export const ALL_PROJECTS: Project[] = [
   {
     id: "p46", name: "Houston Independent School District Elementary School Renovation",
     date: "04/07/2026", location: "Houston, Texas", zip: "77002",
-    docs: "Matches Found", datePosted: "2026-03-18", stage: "Bidding", value: "$620K",
+    docs: "Matches Found", datePosted: "2026-03-02", stage: "Bidding", value: "$620K",
     state: "tx", county: "Harris", trades: ["electrical-low-voltage", "specialties"],
     buildingUse: "educational-school-university", constructionType: "commercial",
     projectType: "renovation-remodel-repair", laborStatus: "non-union",
@@ -543,7 +543,7 @@ export const ALL_PROJECTS: Project[] = [
   {
     id: "p58", name: "San Antonio Unified School District Campus Renovation",
     date: "04/12/2026", location: "San Antonio, Texas", zip: "78205",
-    docs: "Matches Found", datePosted: "2026-03-16", stage: "Bidding", value: "$920K",
+    docs: "Matches Found", datePosted: "2026-03-06", stage: "Bidding", value: "$920K",
     state: "tx", county: "Bexar", trades: ["specialties", "electrical-low-voltage"],
     buildingUse: "educational-school-university", constructionType: "commercial",
     projectType: "renovation-remodel-repair", laborStatus: "non-union",
@@ -653,7 +653,7 @@ export const ALL_PROJECTS: Project[] = [
   {
     id: "p70", name: "Tallahassee State Capitol Building Renovation",
     date: "04/16/2026", location: "Tallahassee, Florida", zip: "32301",
-    docs: "Matches Found", datePosted: "2026-03-16", stage: "Bidding", value: "$830K",
+    docs: "Matches Found", datePosted: "2026-03-06", stage: "Bidding", value: "$830K",
     state: "fl", county: "Leon", trades: ["electrical-low-voltage", "specialties"],
     buildingUse: "municipal", constructionType: "commercial",
     projectType: "renovation-remodel-repair", laborStatus: "prevailing-wage",

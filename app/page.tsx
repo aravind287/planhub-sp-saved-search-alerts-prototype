@@ -689,7 +689,7 @@ export default function ProjectsPage() {
           <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-border">
             <div className="flex items-center gap-3">
               <span className="font-semibold text-foreground">PlanHub Projects</span>
-              <span className="text-sm text-muted-foreground">| {filteredProjects.length} total</span>
+              <span className="text-sm text-muted-foreground">| {baseProjects.length} total</span>
               <button
                 onClick={() => setShowNewOnly(!showNewOnly)}
                 className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border transition-colors ${
