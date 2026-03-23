@@ -22,7 +22,7 @@ export interface Project {
 export const ALL_PROJECTS: Project[] = [
   // ── 20 FULL-MATCH CA SECURITY PROJECTS ──────────────────────────────────────
   {
-    id: "p1", name: "Los Angeles USD Surveillance System Upgrade",
+    id: "p1", name: "Los Angeles Unified School District Campus Renovation",
     date: "03/22/2026", location: "Los Angeles, California", zip: "90012",
     docs: "Matches Found", datePosted: "2026-03-18", stage: "Bidding", value: "$1.2M",
     state: "ca", county: "Los Angeles", trades: ["electrical-low-voltage", "specialties"],
@@ -31,7 +31,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["CCTV", "surveillance", "security camera", "access control"],
   },
   {
-    id: "p2", name: "Kaiser Permanente San Jose Security Integration",
+    id: "p2", name: "Kaiser Permanente San Jose Medical Center Renovation",
     date: "03/22/2026", location: "San Jose, California", zip: "95113",
     docs: "Matches Found", datePosted: "2026-03-17", stage: "Bidding", value: "$870K",
     state: "ca", county: "Santa Clara", trades: ["electrical-low-voltage", "special-construction"],
@@ -40,7 +40,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["access control", "security camera", "card reader", "security system"],
   },
   {
-    id: "p3", name: "Sacramento City Hall Access Control Modernization",
+    id: "p3", name: "Sacramento City Hall Modernization",
     date: "03/23/2026", location: "Sacramento, California", zip: "95814",
     docs: "Matches Found", datePosted: "2026-03-16", stage: "Bidding", value: "$640K",
     state: "ca", county: "Sacramento", trades: ["electrical-low-voltage", "specialties"],
@@ -49,7 +49,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["access control", "card reader", "security system", "intercom"],
   },
   {
-    id: "p4", name: "BART Concord Station Security Camera System",
+    id: "p4", name: "BART Concord Station Renovation",
     date: "03/24/2026", location: "Concord, California", zip: "94519",
     docs: "Matches Found", datePosted: "2026-03-20", stage: "Bidding", value: "$980K",
     state: "ca", county: "Contra Costa", trades: ["electrical-low-voltage"],
@@ -58,7 +58,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["CCTV", "surveillance", "security camera"],
   },
   {
-    id: "p5", name: "San Diego USD Intrusion Detection Upgrade",
+    id: "p5", name: "San Diego Unified School District Facility Upgrade",
     date: "02/05/2026", location: "San Diego, California", zip: "92101",
     docs: "Matches Found", datePosted: "2026-03-19", stage: "Bidding", value: "$510K",
     state: "ca", county: "San Diego", trades: ["specialties", "electrical-low-voltage"],
@@ -67,7 +67,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["intrusion detection", "alarm", "security system"],
   },
   {
-    id: "p6", name: "UC Berkeley Integrated Security System Renovation",
+    id: "p6", name: "UC Berkeley Campus Building Renovation",
     date: "02/08/2026", location: "Berkeley, California", zip: "94710",
     docs: "Matches Found", datePosted: "2026-03-21", stage: "Bidding", value: "$2.1M",
     state: "ca", county: "Alameda", trades: ["electrical-low-voltage", "special-construction"],
@@ -76,7 +76,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["CCTV", "access control", "security camera", "surveillance"],
   },
   {
-    id: "p7", name: "LA Metro Red Line Video Surveillance Expansion",
+    id: "p7", name: "LA Metro Red Line Station Renovation",
     date: "03/24/2026", location: "Los Angeles, California", zip: "90012",
     docs: "Matches Found", datePosted: "2026-03-15", stage: "Bidding", value: "$3.4M",
     state: "ca", county: "Los Angeles", trades: ["electrical-low-voltage"],
@@ -85,7 +85,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["CCTV", "surveillance", "security camera"],
   },
   {
-    id: "p8", name: "Stanford Health Care Security Access System",
+    id: "p8", name: "Stanford Health Care Facility Renovation",
     date: "02/12/2026", location: "Palo Alto, California", zip: "94301",
     docs: "Matches Found", datePosted: "2026-03-14", stage: "Pre-Bid", value: "$760K",
     state: "ca", county: "Santa Clara", trades: ["electrical-low-voltage", "specialties"],
@@ -94,7 +94,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["access control", "card reader", "intercom", "security camera"],
   },
   {
-    id: "p9", name: "Fresno County Detention Facility Access Control",
+    id: "p9", name: "Fresno County Detention Center Renovation",
     date: "02/15/2026", location: "Fresno, California", zip: "93721",
     docs: "Matches Found", datePosted: "2026-03-12", stage: "Bidding", value: "$1.9M",
     state: "ca", county: "Fresno", trades: ["special-construction", "electrical-low-voltage"],
@@ -103,7 +103,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["access control", "card reader", "security system"],
   },
   {
-    id: "p10", name: "San Francisco City Hall Security Modernization",
+    id: "p10", name: "San Francisco City Hall Building Upgrade",
     date: "03/25/2026", location: "San Francisco, California", zip: "94102",
     docs: "Matches Found", datePosted: "2026-03-18", stage: "Bidding", value: "$1.1M",
     state: "ca", county: "San Francisco", trades: ["electrical-low-voltage", "specialties"],
@@ -112,7 +112,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["access control", "security camera", "intercom", "surveillance"],
   },
   {
-    id: "p11", name: "Orange County Sheriff Campus CCTV Upgrade",
+    id: "p11", name: "Orange County Sheriff Administration Campus Renovation",
     date: "03/25/2026", location: "Santa Ana, California", zip: "92701",
     docs: "Matches Found", datePosted: "2026-03-10", stage: "Bidding", value: "$2.3M",
     state: "ca", county: "Orange", trades: ["electrical-low-voltage", "special-construction"],
@@ -121,7 +121,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["CCTV", "surveillance", "intrusion detection"],
   },
   {
-    id: "p12", name: "San Jose International Airport Security Integration",
+    id: "p12", name: "San Jose International Airport Terminal Renovation",
     date: "03/26/2026", location: "San Jose, California", zip: "95113",
     docs: "Matches Found", datePosted: "2026-03-08", stage: "Bidding", value: "$4.7M",
     state: "ca", county: "Santa Clara", trades: ["electrical-low-voltage", "specialties"],
@@ -130,7 +130,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["security camera", "access control", "surveillance"],
   },
   {
-    id: "p13", name: "Long Beach USD School Alarm System Replacement",
+    id: "p13", name: "Long Beach Unified School District Facility Renovation",
     date: "02/18/2026", location: "Long Beach, California", zip: "90802",
     docs: "Matches Found", datePosted: "2026-03-20", stage: "Bidding", value: "$430K",
     state: "ca", county: "Los Angeles", trades: ["specialties"],
@@ -139,7 +139,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["alarm", "intrusion detection", "security system"],
   },
   {
-    id: "p14", name: "Dignity Health Stockton Campus Security System",
+    id: "p14", name: "Dignity Health Stockton Medical Campus Renovation",
     date: "02/22/2026", location: "Stockton, California", zip: "95202",
     docs: "Matches Found", datePosted: "2026-03-05", stage: "Bidding", value: "$690K",
     state: "ca", county: "San Joaquin", trades: ["electrical-low-voltage"],
@@ -148,7 +148,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["access control", "security camera", "card reader"],
   },
   {
-    id: "p15", name: "Caltrans District 4 Freeway CCTV Expansion",
+    id: "p15", name: "Caltrans District 4 Operations Center Renovation",
     date: "02/26/2026", location: "Oakland, California", zip: "94612",
     docs: "Matches Found", datePosted: "2026-03-16", stage: "Bidding", value: "$5.2M",
     state: "ca", county: "Alameda", trades: ["electrical-low-voltage"],
@@ -157,7 +157,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["CCTV", "surveillance", "security camera"],
   },
   {
-    id: "p16", name: "San Diego Convention Center Security Overhaul",
+    id: "p16", name: "San Diego Convention Center Renovation",
     date: "03/26/2026", location: "San Diego, California", zip: "92101",
     docs: "Matches Found", datePosted: "2026-03-11", stage: "Pre-Bid", value: "$1.6M",
     state: "ca", county: "San Diego", trades: ["electrical-low-voltage", "special-construction"],
@@ -166,7 +166,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["access control", "security camera", "intercom"],
   },
   {
-    id: "p17", name: "Riverside USD School District Security Upgrade",
+    id: "p17", name: "Riverside Unified School District Campus Renovation",
     date: "03/27/2026", location: "Riverside, California", zip: "92501",
     docs: "Matches Found", datePosted: "2026-03-09", stage: "Bidding", value: "$780K",
     state: "ca", county: "Riverside", trades: ["specialties", "electrical-low-voltage"],
@@ -175,7 +175,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["access control", "alarm", "security system"],
   },
   {
-    id: "p18", name: "LA County Superior Court Security Integration",
+    id: "p18", name: "LA County Superior Court Building Renovation",
     date: "03/27/2026", location: "Los Angeles, California", zip: "90012",
     docs: "Matches Found", datePosted: "2026-03-17", stage: "Bidding", value: "$3.0M",
     state: "ca", county: "Los Angeles", trades: ["electrical-low-voltage", "special-construction"],
@@ -184,7 +184,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["access control", "CCTV", "security camera"],
   },
   {
-    id: "p19", name: "Caltrain Peninsula Corridor Security Cameras",
+    id: "p19", name: "Caltrain Peninsula Corridor Station Renovation",
     date: "03/01/2026", location: "San Mateo, California", zip: "94401",
     docs: "Matches Found", datePosted: "2026-03-13", stage: "Pre-Bid", value: "$2.8M",
     state: "ca", county: "San Mateo", trades: ["electrical-low-voltage"],
@@ -193,7 +193,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["surveillance", "CCTV", "security camera"],
   },
   {
-    id: "p20", name: "UCSD Medical Center Integrated Security System",
+    id: "p20", name: "UCSD Medical Center Building Renovation",
     date: "03/28/2026", location: "San Diego, California", zip: "92101",
     docs: "Matches Found", datePosted: "2026-03-19", stage: "Bidding", value: "$1.4M",
     state: "ca", county: "San Diego", trades: ["electrical-low-voltage", "specialties"],
@@ -204,7 +204,7 @@ export const ALL_PROJECTS: Project[] = [
 
   // ── CA NON-SECURITY PROJECTS ────────────────────────────────────────────────
   {
-    id: "p21", name: "Google Santa Clara Data Center Phase 2",
+    id: "p21", name: "Google Santa Clara Campus Phase 2",
     date: "03/03/2026", location: "Santa Clara, California", zip: "95050",
     docs: "Available", datePosted: "2026-03-10", stage: "Pre-Bid", value: "$42M",
     state: "ca", county: "Santa Clara", trades: ["electrical-low-voltage", "hvac", "plumbing"],
@@ -213,7 +213,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["data center", "MEP", "electrical"],
   },
   {
-    id: "p22", name: "SF Bay Bridge East Span Seismic Retrofit",
+    id: "p22", name: "SF Bay Bridge East Span Retrofit",
     date: "03/05/2026", location: "San Francisco, California", zip: "94102",
     docs: "Available", datePosted: "2026-03-01", stage: "Bidding", value: "$28M",
     state: "ca", county: "San Francisco", trades: ["metal-steel-construction", "concrete-construction"],
@@ -240,7 +240,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["terminal", "flooring", "interior renovation"],
   },
   {
-    id: "p25", name: "UCSF Mission Bay Research Lab Expansion",
+    id: "p25", name: "UCSF Mission Bay Research Building Expansion",
     date: "03/29/2026", location: "San Francisco, California", zip: "94102",
     docs: "Available", datePosted: "2026-02-15", stage: "Pre-Bid", value: "$34M",
     state: "ca", county: "San Francisco", trades: ["concrete-construction", "hvac", "plumbing"],
@@ -258,7 +258,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["medical office", "MEP", "HVAC"],
   },
   {
-    id: "p27", name: "LA Rams SoFi Stadium Parking Structure",
+    id: "p27", name: "Inglewood Sports Complex Parking Structure",
     date: "03/30/2026", location: "Inglewood, California", zip: "90301",
     docs: "Available", datePosted: "2026-03-01", stage: "Bidding", value: "$22M",
     state: "ca", county: "Los Angeles", trades: ["concrete-construction", "demolition-site-construction"],
@@ -296,7 +296,7 @@ export const ALL_PROJECTS: Project[] = [
 
   // ── WASHINGTON STATE PROJECTS ────────────────────────────────────────────────
   {
-    id: "p31", name: "Microsoft Campus Building 44 Expansion",
+    id: "p31", name: "Microsoft Redmond Campus Building Addition",
     date: "04/01/2026", location: "Redmond, Washington", zip: "98052",
     docs: "Available", datePosted: "2026-03-14", stage: "Pre-Bid", value: "$4.2M",
     state: "wa", county: "King", trades: ["electrical-low-voltage", "hvac", "interior-walls-ceilings-insulation"],
@@ -305,7 +305,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["office expansion", "MEP", "tenant improvement"],
   },
   {
-    id: "p32", name: "Seattle Children's Hospital Wing C Renovation",
+    id: "p32", name: "Seattle Children's Hospital Wing Renovation",
     date: "04/01/2026", location: "Seattle, Washington", zip: "98101",
     docs: "Available", datePosted: "2026-03-16", stage: "Bidding", value: "$12M",
     state: "wa", county: "King", trades: ["hvac", "plumbing", "electrical-low-voltage"],
@@ -332,7 +332,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["HVAC", "school", "mechanical"],
   },
   {
-    id: "p35", name: "Bellevue Tech Campus Phase 2",
+    id: "p35", name: "Bellevue Technology Campus Phase 2",
     date: "04/02/2026", location: "Bellevue, Washington", zip: "98004",
     docs: "Matches Found", datePosted: "2026-03-08", stage: "Bidding", value: "$28M",
     state: "wa", county: "King", trades: ["metal-steel-construction", "concrete-construction", "exterior-siding-masonry"],
@@ -422,7 +422,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["warehouse", "tilt-up", "distribution"],
   },
   {
-    id: "p45", name: "Top Pot Doughnuts Foundry Cafe Tenant Improvement",
+    id: "p45", name: "Kent Cafe Tenant Improvement",
     date: "04/07/2026", location: "Kent, Washington", zip: "98032",
     docs: "Matches Found", datePosted: "2026-03-15", stage: "Bidding", value: "$240K",
     state: "wa", county: "King", trades: ["interior-walls-ceilings-insulation", "flooring", "plumbing"],
@@ -433,7 +433,7 @@ export const ALL_PROJECTS: Project[] = [
 
   // ── TEXAS PROJECTS ───────────────────────────────────────────────────────────
   {
-    id: "p46", name: "Houston ISD Elementary School Security Upgrade",
+    id: "p46", name: "Houston Independent School District Elementary School Renovation",
     date: "04/07/2026", location: "Houston, Texas", zip: "77002",
     docs: "Matches Found", datePosted: "2026-03-18", stage: "Bidding", value: "$620K",
     state: "tx", county: "Harris", trades: ["electrical-low-voltage", "specialties"],
@@ -451,7 +451,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["airport", "terminal", "renovation"],
   },
   {
-    id: "p48", name: "Austin Tech Office Campus Phase 1",
+    id: "p48", name: "Austin Technology Campus Phase 1",
     date: "03/12/2026", location: "Austin, Texas", zip: "78701",
     docs: "Available", datePosted: "2026-03-05", stage: "Pre-Bid", value: "$55M",
     state: "tx", county: "Travis", trades: ["concrete-construction", "metal-steel-construction", "hvac"],
@@ -460,7 +460,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["office campus", "tech", "new construction"],
   },
   {
-    id: "p49", name: "Texas Medical Center Expansion Building 7",
+    id: "p49", name: "Texas Medical Center Building 7 Expansion",
     date: "04/08/2026", location: "Houston, Texas", zip: "77002",
     docs: "Available", datePosted: "2026-02-25", stage: "Pre-Bid", value: "$120M",
     state: "tx", county: "Harris", trades: ["concrete-construction", "hvac", "plumbing", "electrical-low-voltage"],
@@ -478,7 +478,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["hotel", "renovation", "hospitality"],
   },
   {
-    id: "p51", name: "Fort Worth ISD High School New Construction",
+    id: "p51", name: "Fort Worth Independent School District High School",
     date: "04/08/2026", location: "Fort Worth, Texas", zip: "76102",
     docs: "Available", datePosted: "2026-03-01", stage: "Pre-Bid", value: "$45M",
     state: "tx", county: "Tarrant", trades: ["concrete-construction", "metal-steel-construction", "roofing-thermal-moisture", "hvac"],
@@ -496,7 +496,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["corporate headquarters", "office tower"],
   },
   {
-    id: "p53", name: "Harris County Sheriff CCTV Infrastructure",
+    id: "p53", name: "Harris County Sheriff Administration Building Renovation",
     date: "04/09/2026", location: "Houston, Texas", zip: "77002",
     docs: "Matches Found", datePosted: "2026-03-15", stage: "Bidding", value: "$1.8M",
     state: "tx", county: "Harris", trades: ["electrical-low-voltage", "special-construction"],
@@ -505,7 +505,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["CCTV", "surveillance", "security camera"],
   },
   {
-    id: "p54", name: "El Paso County Courthouse Security System",
+    id: "p54", name: "El Paso County Courthouse Renovation",
     date: "04/10/2026", location: "El Paso, Texas", zip: "79901",
     docs: "Matches Found", datePosted: "2026-03-07", stage: "Bidding", value: "$540K",
     state: "tx", county: "El Paso", trades: ["electrical-low-voltage", "specialties"],
@@ -541,7 +541,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["warehouse", "logistics", "tilt-up"],
   },
   {
-    id: "p58", name: "San Antonio USD School Safety Upgrade",
+    id: "p58", name: "San Antonio Unified School District Campus Renovation",
     date: "04/12/2026", location: "San Antonio, Texas", zip: "78205",
     docs: "Matches Found", datePosted: "2026-03-16", stage: "Bidding", value: "$920K",
     state: "tx", county: "Bexar", trades: ["specialties", "electrical-low-voltage"],
@@ -559,7 +559,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["VA", "medical", "renovation"],
   },
   {
-    id: "p60", name: "Corpus Christi Port Security & Infrastructure",
+    id: "p60", name: "Corpus Christi Port Infrastructure Renovation",
     date: "04/13/2026", location: "Corpus Christi, Texas", zip: "78401",
     docs: "Available", datePosted: "2026-03-08", stage: "Pre-Bid", value: "$14M",
     state: "tx", county: "Nueces", trades: ["electrical-low-voltage", "demolition-site-construction"],
@@ -570,7 +570,7 @@ export const ALL_PROJECTS: Project[] = [
 
   // ── FLORIDA PROJECTS ─────────────────────────────────────────────────────────
   {
-    id: "p61", name: "Miami-Dade Schools Security Camera Rollout",
+    id: "p61", name: "Miami-Dade County School District Campus Renovation",
     date: "04/13/2026", location: "Miami, Florida", zip: "33101",
     docs: "Matches Found", datePosted: "2026-03-19", stage: "Bidding", value: "$2.4M",
     state: "fl", county: "Miami-Dade", trades: ["electrical-low-voltage", "specialties"],
@@ -588,7 +588,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["airport", "terminal expansion", "airside"],
   },
   {
-    id: "p63", name: "Orlando Medical Center Patient Tower",
+    id: "p63", name: "Orlando Regional Medical Center Patient Tower",
     date: "03/15/2026", location: "Orlando, Florida", zip: "32801",
     docs: "Available", datePosted: "2026-03-01", stage: "Pre-Bid", value: "$145M",
     state: "fl", county: "Orange", trades: ["concrete-construction", "hvac", "plumbing", "electrical-low-voltage"],
@@ -597,7 +597,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["hospital tower", "patient", "MEP"],
   },
   {
-    id: "p64", name: "Broward County Courthouse Security Integration",
+    id: "p64", name: "Broward County Courthouse Renovation",
     date: "04/14/2026", location: "Fort Lauderdale, Florida", zip: "33301",
     docs: "Matches Found", datePosted: "2026-03-14", stage: "Bidding", value: "$1.1M",
     state: "fl", county: "Broward", trades: ["electrical-low-voltage", "special-construction"],
@@ -606,7 +606,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["access control", "security camera", "intrusion detection"],
   },
   {
-    id: "p65", name: "Jacksonville Naval Air Station Facility Upgrade",
+    id: "p65", name: "Jacksonville Naval Air Station Facility Renovation",
     date: "03/16/2026", location: "Jacksonville, Florida", zip: "32202",
     docs: "Available", datePosted: "2026-02-20", stage: "Bidding", value: "$19M",
     state: "fl", county: "Duval", trades: ["roofing-thermal-moisture", "hvac", "electrical-low-voltage"],
@@ -624,7 +624,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["convention center", "ballroom", "expansion"],
   },
   {
-    id: "p67", name: "Sarasota County Schools HVAC Replacement",
+    id: "p67", name: "Sarasota County Schools HVAC Replacement Program",
     date: "04/15/2026", location: "Sarasota, Florida", zip: "34230",
     docs: "Available", datePosted: "2026-03-05", stage: "Bidding", value: "$3.7M",
     state: "fl", county: "Sarasota", trades: ["hvac"],
@@ -642,7 +642,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["resort", "luxury", "renovation"],
   },
   {
-    id: "p69", name: "Gainesville UF Science Complex Phase 2",
+    id: "p69", name: "University of Florida Science Complex Phase 2",
     date: "04/16/2026", location: "Gainesville, Florida", zip: "32601",
     docs: "Available", datePosted: "2026-02-28", stage: "Pre-Bid", value: "$52M",
     state: "fl", county: "Alachua", trades: ["concrete-construction", "hvac", "plumbing", "electrical-low-voltage"],
@@ -651,7 +651,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["university", "science", "research"],
   },
   {
-    id: "p70", name: "Tallahassee State Capitol Security System",
+    id: "p70", name: "Tallahassee State Capitol Building Renovation",
     date: "04/16/2026", location: "Tallahassee, Florida", zip: "32301",
     docs: "Matches Found", datePosted: "2026-03-16", stage: "Bidding", value: "$830K",
     state: "fl", county: "Leon", trades: ["electrical-low-voltage", "specialties"],
@@ -662,7 +662,7 @@ export const ALL_PROJECTS: Project[] = [
 
   // ── NEW YORK PROJECTS ────────────────────────────────────────────────────────
   {
-    id: "p71", name: "NYC Transit Authority Station Security Cameras",
+    id: "p71", name: "NYC Transit Authority Station Renovation",
     date: "04/17/2026", location: "New York, New York", zip: "10001",
     docs: "Matches Found", datePosted: "2026-03-20", stage: "Bidding", value: "$6.8M",
     state: "ny", county: "New York", trades: ["electrical-low-voltage", "special-construction"],
@@ -698,7 +698,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["library", "renovation", "ADA"],
   },
   {
-    id: "p75", name: "Albany State Capitol Security Modernization",
+    id: "p75", name: "Albany State Capitol Building Modernization",
     date: "04/18/2026", location: "Albany, New York", zip: "12207",
     docs: "Matches Found", datePosted: "2026-03-15", stage: "Bidding", value: "$2.2M",
     state: "ny", county: "Albany", trades: ["electrical-low-voltage", "specialties"],
@@ -716,7 +716,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["high-rise", "mixed-use", "tower"],
   },
   {
-    id: "p77", name: "Buffalo Public School HVAC & Security Upgrade",
+    id: "p77", name: "Buffalo Public Schools Renovation Program",
     date: "04/19/2026", location: "Buffalo, New York", zip: "14202",
     docs: "Matches Found", datePosted: "2026-03-12", stage: "Bidding", value: "$4.1M",
     state: "ny", county: "Erie", trades: ["hvac", "electrical-low-voltage", "specialties"],
@@ -734,7 +734,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["airport", "terminal", "redevelopment"],
   },
   {
-    id: "p79", name: "Rochester Medical Center Patient Wing",
+    id: "p79", name: "Rochester Medical Center Patient Wing Addition",
     date: "04/20/2026", location: "Rochester, New York", zip: "14604",
     docs: "Available", datePosted: "2026-03-08", stage: "Pre-Bid", value: "$62M",
     state: "ny", county: "Monroe", trades: ["concrete-construction", "hvac", "plumbing"],
@@ -754,7 +754,7 @@ export const ALL_PROJECTS: Project[] = [
 
   // ── COLORADO, OREGON, ARIZONA ────────────────────────────────────────────────
   {
-    id: "p81", name: "Denver International Airport Concourse B Security",
+    id: "p81", name: "Denver International Airport Concourse B Renovation",
     date: "04/21/2026", location: "Denver, Colorado", zip: "80202",
     docs: "Matches Found", datePosted: "2026-03-17", stage: "Bidding", value: "$3.2M",
     state: "co", county: "Denver", trades: ["electrical-low-voltage", "special-construction"],
@@ -790,7 +790,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["light rail", "transit", "infrastructure"],
   },
   {
-    id: "p85", name: "Eugene School District Security System",
+    id: "p85", name: "Eugene School District Campus Renovation",
     date: "04/23/2026", location: "Eugene, Oregon", zip: "97401",
     docs: "Matches Found", datePosted: "2026-03-16", stage: "Bidding", value: "$740K",
     state: "or", county: "Lane", trades: ["electrical-low-voltage", "specialties"],
@@ -808,7 +808,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["hospital", "renovation", "seismic"],
   },
   {
-    id: "p87", name: "Phoenix Sky Harbor Airport Security Upgrade",
+    id: "p87", name: "Phoenix Sky Harbor Airport Terminal Renovation",
     date: "04/23/2026", location: "Phoenix, Arizona", zip: "85001",
     docs: "Matches Found", datePosted: "2026-03-19", stage: "Bidding", value: "$4.5M",
     state: "az", county: "Maricopa", trades: ["electrical-low-voltage", "special-construction"],
@@ -817,7 +817,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["CCTV", "security camera", "access control"],
   },
   {
-    id: "p88", name: "Tucson USD Middle School Construction",
+    id: "p88", name: "Tucson Unified School District Middle School",
     date: "04/24/2026", location: "Tucson, Arizona", zip: "85701",
     docs: "Available", datePosted: "2026-03-02", stage: "Pre-Bid", value: "$18M",
     state: "az", county: "Pima", trades: ["concrete-construction", "roofing-thermal-moisture", "hvac"],
@@ -835,7 +835,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["mixed-use", "retail", "residential"],
   },
   {
-    id: "p90", name: "Mesa Community College HVAC System Replacement",
+    id: "p90", name: "Mesa Community College Building Renovation",
     date: "04/25/2026", location: "Mesa, Arizona", zip: "85201",
     docs: "Available", datePosted: "2026-02-28", stage: "Bidding", value: "$3.1M",
     state: "az", county: "Maricopa", trades: ["hvac"],
@@ -846,7 +846,7 @@ export const ALL_PROJECTS: Project[] = [
 
   // ── NEVADA, ILLINOIS, GEORGIA ─────────────────────────────────────────────────
   {
-    id: "p91", name: "Las Vegas Strip Casino Security Integration",
+    id: "p91", name: "Las Vegas Casino Resort Renovation",
     date: "04/25/2026", location: "Las Vegas, Nevada", zip: "89101",
     docs: "Matches Found", datePosted: "2026-03-18", stage: "Bidding", value: "$8.9M",
     state: "nv", county: "Clark", trades: ["electrical-low-voltage", "special-construction", "specialties"],
@@ -855,7 +855,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["CCTV", "surveillance", "security camera", "access control"],
   },
   {
-    id: "p92", name: "Reno Airport Terminal 2 Security Upgrade",
+    id: "p92", name: "Reno-Tahoe International Airport Terminal Renovation",
     date: "04/26/2026", location: "Reno, Nevada", zip: "89501",
     docs: "Matches Found", datePosted: "2026-03-10", stage: "Bidding", value: "$2.1M",
     state: "nv", county: "Washoe", trades: ["electrical-low-voltage", "specialties"],
@@ -882,7 +882,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["hospital", "expansion", "MEP"],
   },
   {
-    id: "p95", name: "Aurora School District Security Program",
+    id: "p95", name: "Aurora School District Campus Renovation",
     date: "04/27/2026", location: "Aurora, Illinois", zip: "60505",
     docs: "Matches Found", datePosted: "2026-03-14", stage: "Bidding", value: "$1.3M",
     state: "il", county: "DuPage", trades: ["electrical-low-voltage", "specialties"],
@@ -891,7 +891,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["security camera", "access control", "alarm"],
   },
   {
-    id: "p96", name: "Atlanta Airport Concourse T CCTV Expansion",
+    id: "p96", name: "Hartsfield-Jackson Atlanta Airport Concourse Renovation",
     date: "04/28/2026", location: "Atlanta, Georgia", zip: "30301",
     docs: "Matches Found", datePosted: "2026-03-17", stage: "Bidding", value: "$5.6M",
     state: "ga", county: "Fulton", trades: ["electrical-low-voltage", "special-construction"],
@@ -918,7 +918,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["VA", "medical center", "renovation"],
   },
   {
-    id: "p99", name: "Gwinnett County School District Safety Upgrade",
+    id: "p99", name: "Gwinnett County School District Campus Renovation",
     date: "04/29/2026", location: "Lawrenceville, Georgia", distance: "—", zip: "30046",
     docs: "Matches Found", datePosted: "2026-03-11", stage: "Bidding", value: "$1.7M",
     state: "ga", county: "Gwinnett", trades: ["specialties", "electrical-low-voltage"],
@@ -938,7 +938,7 @@ export const ALL_PROJECTS: Project[] = [
 
   // ── NC, NJ, OH, PA, VA, MD, MI ───────────────────────────────────────────────
   {
-    id: "p101", name: "Charlotte Douglas Airport Security System",
+    id: "p101", name: "Charlotte Douglas Airport Terminal Renovation",
     date: "04/29/2026", location: "Charlotte, North Carolina", distance: "—", zip: "28202",
     docs: "Matches Found", datePosted: "2026-03-15", stage: "Bidding", value: "$3.8M",
     state: "nc", county: "Mecklenburg", trades: ["electrical-low-voltage", "special-construction"],
@@ -947,7 +947,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["security camera", "access control", "CCTV"],
   },
   {
-    id: "p102", name: "Raleigh-Durham Hospital Expansion",
+    id: "p102", name: "Raleigh-Durham Medical Center Expansion",
     date: "04/30/2026", location: "Durham, North Carolina", distance: "—", zip: "27701",
     docs: "Available", datePosted: "2026-03-01", stage: "Pre-Bid", value: "$75M",
     state: "nc", county: "Durham", trades: ["concrete-construction", "hvac", "plumbing"],
@@ -956,7 +956,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["hospital", "expansion", "patient care"],
   },
   {
-    id: "p103", name: "Newark NJ Transit Hub Renovation",
+    id: "p103", name: "Newark Transit Hub Renovation",
     date: "04/30/2026", location: "Newark, New Jersey", distance: "—", zip: "07102",
     docs: "Available", datePosted: "2026-03-05", stage: "Bidding", value: "$28M",
     state: "nj", county: "Essex", trades: ["concrete-construction", "electrical-low-voltage", "interior-walls-ceilings-insulation"],
@@ -965,7 +965,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["transit", "hub", "renovation"],
   },
   {
-    id: "p104", name: "Bergen County Schools Security Rollout",
+    id: "p104", name: "Bergen County Schools Renovation Program",
     date: "04/30/2026", location: "Hackensack, New Jersey", distance: "—", zip: "07601",
     docs: "Matches Found", datePosted: "2026-03-16", stage: "Bidding", value: "$2.9M",
     state: "nj", county: "Bergen", trades: ["electrical-low-voltage", "specialties"],
@@ -974,7 +974,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["security camera", "access control", "intercom"],
   },
   {
-    id: "p105", name: "Columbus Ohio State Medical Center Addition",
+    id: "p105", name: "Ohio State University Medical Center Addition",
     date: "04/30/2026", location: "Columbus, Ohio", distance: "—", zip: "43215",
     docs: "Available", datePosted: "2026-02-15", stage: "Pre-Bid", value: "$110M",
     state: "oh", county: "Franklin", trades: ["concrete-construction", "hvac", "plumbing", "electrical-low-voltage"],
@@ -992,7 +992,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["airport", "terminal", "renovation"],
   },
   {
-    id: "p107", name: "Philadelphia School District Security System",
+    id: "p107", name: "Philadelphia School District Campus Renovation",
     date: "04/30/2026", location: "Philadelphia, Pennsylvania", distance: "—", zip: "19102",
     docs: "Matches Found", datePosted: "2026-03-18", stage: "Bidding", value: "$3.5M",
     state: "pa", county: "Philadelphia", trades: ["electrical-low-voltage", "specialties"],
@@ -1010,7 +1010,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["children's hospital", "renovation", "MEP"],
   },
   {
-    id: "p109", name: "Richmond VA Courthouse Security Integration",
+    id: "p109", name: "Richmond Federal Courthouse Renovation",
     date: "04/29/2026", location: "Richmond, Virginia", distance: "—", zip: "23220",
     docs: "Matches Found", datePosted: "2026-03-13", stage: "Bidding", value: "$1.4M",
     state: "va", county: "Richmond City", trades: ["electrical-low-voltage", "special-construction"],
@@ -1019,7 +1019,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["access control", "security camera", "intercom"],
   },
   {
-    id: "p110", name: "Pentagon Metro Station Security Upgrade",
+    id: "p110", name: "Pentagon Metro Station Renovation",
     date: "04/29/2026", location: "Arlington, Virginia", distance: "—", zip: "22201",
     docs: "Matches Found", datePosted: "2026-03-09", stage: "Bidding", value: "$4.8M",
     state: "va", county: "Arlington", trades: ["electrical-low-voltage", "special-construction"],
@@ -1028,7 +1028,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["CCTV", "surveillance", "security camera", "access control"],
   },
   {
-    id: "p111", name: "Baltimore BWI Airport Security System Overhaul",
+    id: "p111", name: "Baltimore Washington International Airport Renovation",
     date: "04/28/2026", location: "Linthicum, Maryland", distance: "—", zip: "21090",
     docs: "Matches Found", datePosted: "2026-03-14", stage: "Bidding", value: "$6.2M",
     state: "md", county: "Anne Arundel", trades: ["electrical-low-voltage", "special-construction", "specialties"],
@@ -1037,7 +1037,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["security camera", "access control", "surveillance"],
   },
   {
-    id: "p112", name: "Montgomery County School District Safety",
+    id: "p112", name: "Montgomery County School District Campus Renovation",
     date: "04/28/2026", location: "Rockville, Maryland", distance: "—", zip: "20850",
     docs: "Matches Found", datePosted: "2026-03-10", stage: "Bidding", value: "$2.1M",
     state: "md", county: "Montgomery", trades: ["electrical-low-voltage", "specialties"],
@@ -1046,7 +1046,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["intrusion detection", "alarm", "security system"],
   },
   {
-    id: "p113", name: "Detroit Medical Center New Patient Tower",
+    id: "p113", name: "Detroit Medical Center Patient Tower",
     date: "03/21/2026", location: "Detroit, Michigan", distance: "—", zip: "48226",
     docs: "Available", datePosted: "2026-02-25", stage: "Pre-Bid", value: "$142M",
     state: "mi", county: "Wayne", trades: ["concrete-construction", "metal-steel-construction", "hvac", "plumbing"],
@@ -1055,7 +1055,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["hospital", "patient tower", "new construction"],
   },
   {
-    id: "p114", name: "Grand Rapids Airport Terminal Expansion",
+    id: "p114", name: "Gerald R. Ford Airport Terminal Expansion",
     date: "04/27/2026", location: "Grand Rapids, Michigan", distance: "—", zip: "49503",
     docs: "Available", datePosted: "2026-03-05", stage: "Pre-Bid", value: "$38M",
     state: "mi", county: "Kent", trades: ["concrete-construction", "hvac", "electrical-low-voltage"],
@@ -1064,7 +1064,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["airport", "expansion", "terminal"],
   },
   {
-    id: "p115", name: "Ann Arbor University Hospital Security System",
+    id: "p115", name: "University of Michigan Hospital Renovation",
     date: "04/26/2026", location: "Ann Arbor, Michigan", distance: "—", zip: "48104",
     docs: "Matches Found", datePosted: "2026-03-16", stage: "Bidding", value: "$1.9M",
     state: "mi", county: "Washtenaw", trades: ["electrical-low-voltage", "specialties"],
@@ -1091,7 +1091,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["courthouse", "renovation", "government"],
   },
   {
-    id: "p118", name: "Seattle Amazon HQ2 Security Infrastructure",
+    id: "p118", name: "Seattle Amazon Campus Building Renovation",
     date: "04/23/2026", location: "Seattle, Washington", distance: "5 miles", zip: "98101",
     docs: "Matches Found", datePosted: "2026-03-19", stage: "Pre-Bid", value: "$2.6M",
     state: "wa", county: "King", trades: ["electrical-low-voltage", "special-construction"],
@@ -1100,7 +1100,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["access control", "security camera", "surveillance"],
   },
   {
-    id: "p119", name: "Fresno Unified School Security Camera Upgrade",
+    id: "p119", name: "Fresno Unified School District Campus Renovation",
     date: "04/22/2026", location: "Fresno, California", distance: "46 miles", zip: "93721",
     docs: "Matches Found", datePosted: "2026-03-20", stage: "Bidding", value: "$890K",
     state: "ca", county: "Fresno", trades: ["electrical-low-voltage", "specialties"],
@@ -1109,7 +1109,7 @@ export const ALL_PROJECTS: Project[] = [
     keywords: ["security camera", "CCTV", "surveillance"],
   },
   {
-    id: "p120", name: "San Bernardino County Government Center Security",
+    id: "p120", name: "San Bernardino County Government Center Renovation",
     date: "04/21/2026", location: "San Bernardino, California", distance: "55 miles", zip: "92401",
     docs: "Matches Found", datePosted: "2026-03-11", stage: "Bidding", value: "$1.5M",
     state: "ca", county: "San Bernardino", trades: ["electrical-low-voltage", "special-construction"],

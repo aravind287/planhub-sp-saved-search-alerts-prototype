@@ -129,6 +129,7 @@ export default function ProjectsPage() {
   // What's New state
   const [viewedProjectIds, setViewedProjectIds] = useState<Set<string>>(new Set())
   const [showNewOnly, setShowNewOnly] = useState(false)
+  const [datePostedFilter, setDatePostedFilter] = useState<"" | "today" | "last-7" | "last-30">("")
 
   const newProjectIds = useMemo(
     () => new Set(SORTED_PROJECTS.filter(p => isProjectNew(p.datePosted)).map(p => p.id)),
@@ -266,9 +267,21 @@ export default function ProjectsPage() {
     setCurrentPage(1)
   }
 
-  const baseProjects = showNewOnly
-    ? sortedProjects.filter(p => newProjectIds.has(p.id) && !viewedProjectIds.has(p.id))
-    : sortedProjects
+  const baseProjects = (() => {
+    let base = showNewOnly
+      ? sortedProjects.filter(p => newProjectIds.has(p.id) && !viewedProjectIds.has(p.id))
+      : sortedProjects
+    if (datePostedFilter) {
+      const now = new Date()
+      const cutoff = datePostedFilter === "today"
+        ? new Date(now.getFullYear(), now.getMonth(), now.getDate())
+        : datePostedFilter === "last-7"
+        ? addDays(now, -7)
+        : addDays(now, -30)
+      base = base.filter(p => new Date(p.datePosted) >= cutoff)
+    }
+    return base
+  })()
   const unreadCount = filteredProjects.filter(p => newProjectIds.has(p.id) && !viewedProjectIds.has(p.id)).length
   const pageCount = Math.max(1, Math.ceil(baseProjects.length / PAGE_SIZE))
   const safePage = Math.min(currentPage, pageCount)
@@ -668,8 +681,25 @@ export default function ProjectsPage() {
                 disabled={unreadCount === 0 && !showNewOnly}
               >
                 <span className={`w-1.5 h-1.5 rounded-full ${unreadCount > 0 ? "bg-blue-500" : "bg-muted-foreground"}`} />
-                {unreadCount} new
+                {unreadCount} Unread
               </button>
+
+              {/* Date Posted filter */}
+              <select
+                value={datePostedFilter}
+                onChange={e => { setDatePostedFilter(e.target.value as typeof datePostedFilter); setCurrentPage(1) }}
+                className={`h-7 px-2 rounded-full text-xs font-medium border transition-colors cursor-pointer ${
+                  datePostedFilter
+                    ? "bg-blue-100 text-blue-700 border-blue-300"
+                    : "bg-muted text-muted-foreground border-border hover:bg-muted/80"
+                }`}
+              >
+                <option value="">Date Posted</option>
+                <option value="today">Posted Today</option>
+                <option value="last-7">Posted in Last 7 Days</option>
+                <option value="last-30">Posted in Last 30 Days</option>
+              </select>
+
               {showNewOnly && (
                 <span className="text-xs text-muted-foreground">Showing {displayedProjects.length} unread</span>
               )}
@@ -721,7 +751,7 @@ export default function ProjectsPage() {
                   {displayedProjects.length === 0 ? (
                     <tr>
                       <td colSpan={appliedKeywords.length > 0 ? 6 : 5} className="px-4 py-12 text-center text-sm text-muted-foreground">
-                        {showNewOnly ? "No new unread projects. Turn off the filter to see all." : "No projects match your current filters."}
+                        {showNewOnly ? "No unread projects. Turn off the filter to see all." : datePostedFilter ? "No projects match the selected date posted range." : "No projects match your current filters."}
                       </td>
                     </tr>
                   ) : (
