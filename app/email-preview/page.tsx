@@ -4,9 +4,8 @@ import { useMemo } from "react"
 import Link from "next/link"
 import { Bell, ExternalLink, ChevronRight } from "lucide-react"
 import { ALL_PROJECTS, type Project } from "@/lib/mock-projects"
-import { useSettings } from "@/lib/settings-context"
+import { useSettings, emptyFilters } from "@/lib/settings-context"
 import type { SavedSearch } from "@/components/manage-searches-modal"
-import type { FilterState } from "@/components/search-filters"
 
 // ─── Filter helpers (mirrors app/page.tsx logic) ────────────────────────────
 
@@ -26,16 +25,9 @@ function isProjectNew(datePosted: string): boolean {
   return (new Date().getTime() - posted.getTime()) / (1000 * 60 * 60 * 24) <= 7
 }
 
-function isToday(datePosted: string): boolean {
-  const today = new Date()
-  const posted = new Date(datePosted)
-  return (
-    posted.getFullYear() === today.getFullYear() &&
-    posted.getMonth() === today.getMonth() &&
-    posted.getDate() === today.getDate()
-  )
-}
-
+/** Returns projects matching the saved search that were posted in the last 7 days,
+ *  sorted newest-first. (Production would restrict to today only; demo uses 7 days
+ *  so there's always content to show.) */
 function getMatchingProjects(search: SavedSearch): Project[] {
   const { filters, keywords } = search
   let result = ALL_PROJECTS
@@ -132,8 +124,14 @@ function getMatchingProjects(search: SavedSearch): Project[] {
     })
   }
 
-  // Only projects posted today
-  result = result.filter(p => isToday(p.datePosted))
+  // Only projects posted in the last 7 days (production would restrict to today)
+  const cutoff = addDays(new Date(), -7)
+  result = result.filter(p => new Date(p.datePosted) >= cutoff)
+
+  // Sort newest first
+  result = [...result].sort(
+    (a, b) => new Date(b.datePosted).getTime() - new Date(a.datePosted).getTime()
+  )
 
   return result
 }
@@ -147,9 +145,47 @@ function buildCTAUrl(search: SavedSearch): string {
   return `/?${params.toString()}`
 }
 
+// ─── Demo fallback searches (shown when no real saved searches have alerts) ──
+
+const DEMO_SEARCHES: SavedSearch[] = [
+  {
+    id: "demo-1",
+    name: "Security Systems – California",
+    alertEnabled: true,
+    alertFrequency: "daily",
+    filters: { ...emptyFilters, regions: ["ca"], tradesSubtrades: ["electrical-low-voltage"] },
+    keywords: ["security", "CCTV", "access control"],
+    matchCount: 18,
+    lastUpdated: new Date().toISOString(),
+  },
+  {
+    id: "demo-2",
+    name: "LA County Commercial Projects",
+    alertEnabled: true,
+    alertFrequency: "daily",
+    filters: {
+      ...emptyFilters,
+      regions: ["ca"],
+      counties: ["ca:Los Angeles"],
+      constructionType: ["commercial"],
+    },
+    keywords: [],
+    matchCount: 34,
+    lastUpdated: new Date().toISOString(),
+  },
+]
+
 // ─── Email mock component ────────────────────────────────────────────────────
 
-function EmailCard({ search, projects }: { search: SavedSearch; projects: Project[] }) {
+function EmailCard({
+  search,
+  projects,
+  isDemo,
+}: {
+  search: SavedSearch
+  projects: Project[]
+  isDemo: boolean
+}) {
   const today = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     year: "numeric",
@@ -166,34 +202,43 @@ function EmailCard({ search, projects }: { search: SavedSearch; projects: Projec
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden max-w-2xl mx-auto mb-10">
+      {/* Demo badge */}
+      {isDemo && (
+        <div className="bg-yellow-50 border-b border-yellow-100 px-4 py-1.5 text-center">
+          <span className="text-xs text-yellow-700 font-medium">
+            Demo preview — save a real search with alerts to see your own data
+          </span>
+        </div>
+      )}
+
       {/* Email header bar */}
       <div className="bg-blue-700 px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="text-white font-bold text-xl tracking-tight">PlanHub</div>
-        </div>
+        <div className="text-white font-bold text-xl tracking-tight">PlanHub</div>
         <span className="text-blue-200 text-xs">{frequencyLabel}</span>
       </div>
 
       {/* Email body */}
       <div className="px-6 py-6">
-        {/* Subject-line area */}
         <p className="text-xs text-gray-400 mb-1">{today}</p>
         <h2 className="text-xl font-bold text-gray-900 mb-1">
           {projects.length} new project{projects.length !== 1 ? "s" : ""} matching &ldquo;{search.name}&rdquo;
         </h2>
         <p className="text-sm text-gray-500 mb-5">
-          Here are today&rsquo;s projects that match your saved search. Act fast — bid dates are approaching.
+          Here are the latest projects that match your saved search. Act fast — bid dates are approaching.
         </p>
 
         {/* Project list */}
         {projects.length === 0 ? (
           <div className="bg-gray-50 rounded-lg p-6 text-center text-sm text-gray-500">
-            No new projects were posted today matching this search.
+            No new projects posted in the last 7 days match this search.
           </div>
         ) : (
           <div className="space-y-3 mb-6">
             {projects.slice(0, 5).map(p => (
-              <div key={p.id} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg border border-gray-100 hover:border-blue-200 transition-colors">
+              <div
+                key={p.id}
+                className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg border border-gray-100 hover:border-blue-200 transition-colors"
+              >
                 <div className="flex-1 min-w-0">
                   <div className="font-medium text-gray-900 text-sm leading-snug">{p.name}</div>
                   <div className="flex flex-wrap gap-x-3 gap-y-0.5 mt-1 text-xs text-gray-500">
@@ -230,7 +275,6 @@ function EmailCard({ search, projects }: { search: SavedSearch; projects: Projec
           </Link>
         </div>
 
-        {/* CTA note */}
         <p className="text-center text-xs text-gray-400 mt-3">
           Opens PlanHub with &ldquo;{search.name}&rdquo; applied · Filtered to today&rsquo;s postings
         </p>
@@ -239,7 +283,8 @@ function EmailCard({ search, projects }: { search: SavedSearch; projects: Projec
       {/* Footer */}
       <div className="px-6 py-4 bg-gray-50 border-t border-gray-100 text-center">
         <p className="text-xs text-gray-400">
-          You&rsquo;re receiving this because you enabled {frequencyLabel.toLowerCase()} for &ldquo;{search.name}&rdquo;.{" "}
+          You&rsquo;re receiving this because you enabled {frequencyLabel.toLowerCase()} for &ldquo;
+          {search.name}&rdquo;.{" "}
           <span className="text-gray-500 underline cursor-pointer">Manage alerts</span>
         </p>
       </div>
@@ -253,14 +298,18 @@ export default function EmailPreviewPage() {
   const { savedSearches } = useSettings()
 
   const alertSearches = savedSearches.filter(s => s.alertEnabled)
+  const isDemo = alertSearches.length === 0
+  const searches = isDemo ? DEMO_SEARCHES : alertSearches
 
   const emailData = useMemo(
     () =>
-      alertSearches.map(s => ({
+      searches.map(s => ({
         search: s,
         projects: getMatchingProjects(s),
+        isDemo,
       })),
-    [alertSearches]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [searches.map(s => s.id).join(","), isDemo]
   )
 
   return (
@@ -269,47 +318,31 @@ export default function EmailPreviewPage() {
       <div className="max-w-2xl mx-auto mb-8">
         <div className="flex items-center gap-2 mb-1">
           <Bell className="h-5 w-5 text-blue-700" />
-          <h1 className="text-lg font-bold text-gray-900">Email Preview</h1>
+          <h1 className="text-lg font-bold text-gray-900">Email Alert Preview</h1>
           <span className="ml-auto text-xs bg-yellow-100 text-yellow-700 border border-yellow-200 px-2 py-0.5 rounded-full font-medium">
             Demo only
           </span>
         </div>
         <p className="text-sm text-gray-500">
-          This simulates what subscribers receive. One email is generated per saved search with alerts enabled.
-          Projects shown are those posted today that match each search&rsquo;s filters.
+          Simulates what subscribers receive. One email per saved search with alerts enabled.
+          {isDemo
+            ? " Showing demo data — go save a real search to preview your own."
+            : " Projects shown are those posted in the last 7 days matching each search."}
         </p>
       </div>
 
-      {alertSearches.length === 0 ? (
-        <div className="max-w-2xl mx-auto bg-white border border-gray-200 rounded-lg p-10 text-center shadow-sm">
-          <Bell className="h-10 w-10 text-gray-300 mx-auto mb-3" />
-          <h2 className="text-base font-semibold text-gray-700 mb-1">No active alerts</h2>
-          <p className="text-sm text-gray-400 mb-4">
-            Save a search with email alerts enabled to see a preview here.
-          </p>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-1.5 text-sm text-blue-700 font-medium hover:underline"
-          >
-            Go to Projects
-            <ExternalLink className="h-3.5 w-3.5" />
-          </Link>
-        </div>
-      ) : (
-        <>
-          <div className="max-w-2xl mx-auto mb-4 flex items-center justify-between">
-            <span className="text-xs text-gray-500">
-              {alertSearches.length} alert{alertSearches.length !== 1 ? "s" : ""} active
-            </span>
-            <Link href="/" className="text-xs text-blue-700 hover:underline flex items-center gap-1">
-              ← Back to Projects
-            </Link>
-          </div>
-          {emailData.map(({ search, projects }) => (
-            <EmailCard key={search.id} search={search} projects={projects} />
-          ))}
-        </>
-      )}
+      <div className="max-w-2xl mx-auto mb-4 flex items-center justify-between">
+        <span className="text-xs text-gray-500">
+          {searches.length} alert{searches.length !== 1 ? "s" : ""}{isDemo ? " (demo)" : ""}
+        </span>
+        <Link href="/" className="text-xs text-blue-700 hover:underline">
+          ← Back to Projects
+        </Link>
+      </div>
+
+      {emailData.map(({ search, projects, isDemo: demo }) => (
+        <EmailCard key={search.id} search={search} projects={projects} isDemo={demo} />
+      ))}
     </div>
   )
 }
