@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useState, useCallback, type ReactNode } from "react"
+import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react"
 import type { SavedSearch } from "@/components/manage-searches-modal"
 import type { FilterState } from "@/components/search-filters"
 
@@ -82,8 +82,15 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   // Notification settings
   const [notificationSettings, setNotificationSettings] = useState<NotificationSettings>(defaultNotificationSettings)
   
-  // Saved searches
-  const [savedSearches, setSavedSearches] = useState<SavedSearch[]>([])
+  // Saved searches — persisted to localStorage
+  const [savedSearches, setSavedSearches] = useState<SavedSearch[]>(() => {
+    if (typeof window === "undefined") return []
+    try {
+      return JSON.parse(localStorage.getItem("planhub-saved-searches") ?? "[]")
+    } catch {
+      return []
+    }
+  })
   
   // UI state
   const [showOnboarding, setShowOnboarding] = useState(true)
@@ -141,6 +148,11 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       )
     )
   }, [])
+
+  // Sync savedSearches to localStorage
+  useEffect(() => {
+    localStorage.setItem("planhub-saved-searches", JSON.stringify(savedSearches))
+  }, [savedSearches])
 
   // Computed values
   const enabledAlertsCount = savedSearches.filter(s => s.alertEnabled).length
