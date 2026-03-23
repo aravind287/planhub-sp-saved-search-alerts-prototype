@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useCallback, useMemo } from "react"
-import { useRouter } from "next/navigation"
+import { useState, useCallback, useMemo, useEffect } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Search, ChevronUp, Bell, BellOff, Info, X, ChevronsUpDown, ChevronDown } from "lucide-react"
 import { ALL_PROJECTS } from "@/lib/mock-projects"
 import { getCompanyDistanceLabel, getCompanyDistance, distanceFromZip } from "@/lib/geo-utils"
@@ -130,6 +130,15 @@ export default function ProjectsPage() {
   const [viewedProjectIds, setViewedProjectIds] = useState<Set<string>>(new Set())
   const [showNewOnly, setShowNewOnly] = useState(false)
   const [datePostedFilter, setDatePostedFilter] = useState<"" | "today" | "last-7" | "last-30">("")
+
+  // Apply URL params from email CTA link on mount
+  const searchParams = useSearchParams()
+  useEffect(() => {
+    const posted = searchParams.get("posted")
+    if (posted === "today" || posted === "last-7" || posted === "last-30") {
+      setDatePostedFilter(posted)
+    }
+  }, [searchParams])
 
   const newProjectIds = useMemo(
     () => new Set(SORTED_PROJECTS.filter(p => isProjectNew(p.datePosted)).map(p => p.id)),
