@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback, useMemo, useEffect } from "react"
+import { useState, useCallback, useMemo, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { Search, ChevronUp, Bell, BellOff, Info, X, ChevronsUpDown, ChevronDown } from "lucide-react"
 import { ALL_PROJECTS } from "@/lib/mock-projects"
@@ -131,14 +131,26 @@ export default function ProjectsPage() {
   const [showNewOnly, setShowNewOnly] = useState(false)
   const [datePostedFilter, setDatePostedFilter] = useState<"" | "today" | "last-7" | "last-30">("")
 
-  // Apply URL params from email CTA link on mount
+  // Apply URL params from email CTA link — runs once when savedSearches is first available
+  const urlParamsApplied = useRef(false)
   useEffect(() => {
+    if (urlParamsApplied.current) return
     const params = new URLSearchParams(window.location.search)
+    const searchId = params.get("search")
+    if (searchId) {
+      if (savedSearches.length === 0) return // wait until searches load from localStorage
+      urlParamsApplied.current = true
+      const match = savedSearches.find(s => s.id === searchId)
+      if (match) handleLoadSearch(match)
+    } else {
+      urlParamsApplied.current = true
+    }
     const posted = params.get("posted")
     if (posted === "today" || posted === "last-7" || posted === "last-30") {
       setDatePostedFilter(posted)
     }
-  }, [])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [savedSearches])
 
   const newProjectIds = useMemo(
     () => new Set(SORTED_PROJECTS.filter(p => isProjectNew(p.datePosted)).map(p => p.id)),
