@@ -51,7 +51,7 @@ export const ALL_PROJECTS: Project[] = [
   {
     id: "p4", name: "BART Concord Station Renovation",
     date: "03/24/2026", location: "Concord, California", zip: "94519",
-    docs: "Matches Found", datePosted: "2026-03-20", stage: "Bidding", value: "$980K",
+    docs: "Matches Found", datePosted: "2026-03-22", stage: "Bidding", value: "$980K",
     state: "ca", county: "Contra Costa", trades: ["electrical-low-voltage"],
     buildingUse: "transportation-terminal", constructionType: "civil",
     projectType: "new-construction-no-site-work", laborStatus: "prevailing-wage",
@@ -69,7 +69,7 @@ export const ALL_PROJECTS: Project[] = [
   {
     id: "p6", name: "UC Berkeley Campus Building Renovation",
     date: "02/08/2026", location: "Berkeley, California", zip: "94710",
-    docs: "Matches Found", datePosted: "2026-03-21", stage: "Bidding", value: "$2.1M",
+    docs: "Matches Found", datePosted: "2026-03-22", stage: "Bidding", value: "$2.1M",
     state: "ca", county: "Alameda", trades: ["electrical-low-voltage", "special-construction"],
     buildingUse: "educational-school-university", constructionType: "commercial",
     projectType: "renovation-remodel-repair", laborStatus: "prevailing-wage",
@@ -132,7 +132,7 @@ export const ALL_PROJECTS: Project[] = [
   {
     id: "p13", name: "Long Beach Unified School District Facility Renovation",
     date: "02/18/2026", location: "Long Beach, California", zip: "90802",
-    docs: "Matches Found", datePosted: "2026-03-20", stage: "Bidding", value: "$430K",
+    docs: "Matches Found", datePosted: "2026-03-22", stage: "Bidding", value: "$430K",
     state: "ca", county: "Los Angeles", trades: ["specialties"],
     buildingUse: "educational-school-university", constructionType: "commercial",
     projectType: "renovation-remodel-repair", laborStatus: "prevailing-wage",
@@ -664,7 +664,7 @@ export const ALL_PROJECTS: Project[] = [
   {
     id: "p71", name: "NYC Transit Authority Station Renovation",
     date: "04/17/2026", location: "New York, New York", zip: "10001",
-    docs: "Matches Found", datePosted: "2026-03-20", stage: "Bidding", value: "$6.8M",
+    docs: "Matches Found", datePosted: "2026-03-22", stage: "Bidding", value: "$6.8M",
     state: "ny", county: "New York", trades: ["electrical-low-voltage", "special-construction"],
     buildingUse: "transportation-terminal", constructionType: "civil",
     projectType: "renovation-remodel-repair", laborStatus: "union",
@@ -1102,7 +1102,7 @@ export const ALL_PROJECTS: Project[] = [
   {
     id: "p119", name: "Fresno Unified School District Campus Renovation",
     date: "04/22/2026", location: "Fresno, California", distance: "46 miles", zip: "93721",
-    docs: "Matches Found", datePosted: "2026-03-20", stage: "Bidding", value: "$890K",
+    docs: "Matches Found", datePosted: "2026-03-22", stage: "Bidding", value: "$890K",
     state: "ca", county: "Fresno", trades: ["electrical-low-voltage", "specialties"],
     buildingUse: "educational-school-university", constructionType: "commercial",
     projectType: "renovation-remodel-repair", laborStatus: "prevailing-wage",
