@@ -28,7 +28,7 @@ const defaultNotificationSettings: NotificationSettings = {
   projectStatusUpdates: true,
   bidDueDateReminders: true,
   keywordAlertsEnabled: true,
-  legacyKeywords: ["concrete", "film", "tile", "ceramic", "wood"],
+  legacyKeywords: ["LED", "lighting fixture", "retrofit", "commercial lighting", "dimmer"],
 }
 
 export const emptyFilters: FilterState = {
