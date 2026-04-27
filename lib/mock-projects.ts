@@ -2331,6 +2331,26 @@ export const ALL_PROJECTS: Project[] = [
     zip: "45429"
   },
 
+  // ── Filter-only CA projects (no camera/security keywords) ──────────────────
+  {
+    id: "p119", name: "San Diego Convention Center HVAC Modernization",
+    date: "05/15/2026", location: "San Diego, California", zip: "92101",
+    docs: "Available", datePosted: "2026-04-24", stage: "Bidding", value: "$3.2M",
+    state: "ca", county: "San Diego", trades: ["hvac", "plumbing", "electrical-low-voltage"],
+    buildingUse: "conference-convention-center", constructionType: "commercial",
+    projectType: "renovation-remodel-repair", laborStatus: "prevailing-wage",
+    keywords: ["HVAC replacement", "mechanical systems", "plumbing retrofit"],
+  },
+  {
+    id: "p120", name: "Oakland City Hall Electrical Systems Upgrade",
+    date: "05/20/2026", location: "Oakland, California", zip: "94612",
+    docs: "Available", datePosted: "2026-04-22", stage: "Bidding", value: "$1.8M",
+    state: "ca", county: "Alameda", trades: ["electrical-low-voltage", "specialties"],
+    buildingUse: "municipal", constructionType: "commercial",
+    projectType: "renovation-remodel-repair", laborStatus: "prevailing-wage",
+    keywords: ["electrical upgrade", "switchgear", "lighting controls"],
+  },
+
   // ── 120 SECURITY PROJECTS (SEC SOL) ────────────────────────────────────────
 // ── 20 FULL-MATCH CA SECURITY PROJECTS ──────────────────────────────────────
   {

@@ -149,6 +149,10 @@ export default function ProjectsPage() {
     if (posted === "today" || posted === "last-7" || posted === "last-30") {
       setDatePostedFilter(posted)
     }
+    const projectId = params.get("project")
+    if (projectId) {
+      setSelectedProjectId(projectId)
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [savedSearches])
 
