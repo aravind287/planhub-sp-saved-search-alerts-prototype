@@ -37,6 +37,36 @@ const DEMO_SEARCH: SavedSearch = {
   lastUpdated: new Date().toISOString(),
 }
 
+const DEMO_FILTERS_2: FilterState = {
+  tradesSubtrades: ["electrical-low-voltage", "specialties", "special-construction"],
+  status: [],
+  constructionType: ["commercial"],
+  projectBuildingUse: [],
+  projectTypes: ["renovation-remodel-repair", "new-construction-with-site-work", "new-construction-no-site-work"],
+  sectorLaborStatus: ["non-union", "prevailing-wage"],
+  regions: ["ca"],
+  counties: [
+    "ca:Santa Clara", "ca:San Diego", "ca:Alameda",
+    "ca:San Francisco", "ca:Sacramento", "ca:Orange", "ca:San Mateo",
+  ],
+  zipCode: "",
+  distance: "",
+  bidDueDate: "",
+  bidDateFrom: "",
+  bidDateTo: "",
+}
+
+const DEMO_SEARCH_2: SavedSearch = {
+  id: "demo-preview-2",
+  name: "Bay Area & SoCal - Security",
+  alertEnabled: true,
+  alertFrequency: "daily",
+  keywords: ["access control", "security camera", "CCTV", "intercom"],
+  filters: DEMO_FILTERS_2,
+  matchCount: 0,
+  lastUpdated: new Date().toISOString(),
+}
+
 // ─── Label maps ──────────────────────────────────────────────────────────────
 
 const TRADE_LABELS: Record<string, string> = {
@@ -378,7 +408,7 @@ function EmailPreview({ search, projects, totalCount, isDemo }: { search: SavedS
         <div className="bg-white px-8 py-7">
           <p className="text-base text-gray-800 mb-6">
             Hi John,<br />
-            here are <strong>{totalCount} new projects</strong> matching your saved search <strong>&ldquo;{search.name}&rdquo;</strong>. Review them before the bid dates close.
+            here are <strong>{projects.length < totalCount ? `${projects.length} of ${totalCount}` : totalCount} new projects</strong> matching your saved search <strong>&ldquo;{search.name}&rdquo;</strong>. Review them before the bid dates close.
           </p>
 
           <SearchContextBlock search={search} />
@@ -450,13 +480,17 @@ export default function EmailPreviewPage() {
   const alertSearches = savedSearches.filter(s => s.alertEnabled)
 
   const emailData = useMemo(() => {
-    const demoResult = getMatchingProjects(DEMO_SEARCH)
-    const demoEntry = { search: DEMO_SEARCH, projects: demoResult.projects, totalCount: demoResult.totalCount, isDemo: true }
+    const demo1 = getMatchingProjects(DEMO_SEARCH)
+    const demo2 = getMatchingProjects(DEMO_SEARCH_2)
+    const demoEntries = [
+      { search: DEMO_SEARCH, projects: demo1.projects, totalCount: demo1.totalCount, isDemo: true },
+      { search: DEMO_SEARCH_2, projects: demo2.projects, totalCount: demo2.totalCount, isDemo: true },
+    ]
     const realEntries = alertSearches.map(s => {
       const { projects, totalCount } = getMatchingProjects(s)
       return { search: s, projects, totalCount, isDemo: false }
     })
-    return [demoEntry, ...realEntries]
+    return [...demoEntries, ...realEntries]
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [alertSearches.map(s => s.id).join(",")])
 
